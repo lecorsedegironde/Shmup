@@ -2,16 +2,16 @@
 
 using namespace std;
 
-//*********************************************
-//  Constantes                                *
-//*********************************************
+//=============================================
+//  Constantes                                |
+//=============================================
 const int GameModel::MAX_BEST_SCORES = 5;
 const int GameModel::MODEL_WIDTH = 800;
 const int GameModel::MODEL_HEIGHT = 600;
 
-//*********************************************
-//* Constructeurs                             *
-//*********************************************
+//=============================================
+//  Constructeurs                             |
+//=============================================
 GameModel::GameModel()
     : _w {MODEL_WIDTH}, _h {MODEL_HEIGHT}, _score{0},
     _malus{0}, _scoreTotal{0}, _combo{0}, _nbLevel{0},
@@ -36,17 +36,17 @@ GameModel::GameModel(int w, int h, int d)
     //TODO Ici initialiser les classes qui ont des relations avec le GameModel
 }
 
-//*********************************************
-//* Destructeurs                              *
-//*********************************************
+//=============================================
+//  Destructeurs                              |
+//=============================================
 GameModel::~GameModel()
 {
     //TODO Detruire chaque objet initialisé dans le constructeur
 }
 
-//*********************************************
-//* Prochaine Etape                           *
-//*********************************************
+//=============================================
+//  Prochaine Etape                           |
+//=============================================
 void GameModel::nextStep()
 {
 
