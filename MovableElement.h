@@ -24,8 +24,9 @@ class MovableElement
         void setEtat(const bool &etat);
 
         virtual ~MovableElement();
-        virtual bool isAlive();
-        virtual void detruire();
+        virtual bool isAlive()=0;
+        virtual void detruire()=0;
+
     protected:
         int m_x;
         int m_y;

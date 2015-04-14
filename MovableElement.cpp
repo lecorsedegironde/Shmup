@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//*********************************************
+//  Constructeurs                             *
+//*********************************************
 MovableElement::MovableElement()
     : m_x{0}, m_y{0}, m_w{0}, m_h{0}, m_dx{0}, m_dy{0}
 {}
@@ -13,7 +16,14 @@ MovableElement::MovableElement(int x, int y, int w, int h, int dx, int dy)
     : m_x{x}, m_y{y}, m_w{w}, m_h{h}, m_dx{dx}, m_dy{dy}
 {}
 
-//Getters de la classe
+//*********************************************
+//  Destructeurs                              *
+//*********************************************
+MovableElement::~MovableElement(){}
+
+//*********************************************
+//  Getters                                   *
+//*********************************************
 int MovableElement::getX() const
 {
     return m_x;
@@ -49,7 +59,9 @@ bool MovableElement::getEtat() const
     return m_etat;
 }
 
-//Setters de la classe
+//*********************************************
+//  Setters                                   *
+//*********************************************
 void MovableElement::setX(const int &x)
 {
     m_x = x;
@@ -83,20 +95,4 @@ void MovableElement::setDy(const int &dy)
 void MovableElement::setEtat(const bool &etat)
 {
     m_etat = etat;
-}
-
-
-MovableElement::~MovableElement()
-{
-    //dtor
-}
-
-bool MovableElement::isAlive()
-{
-    return true;
-}
-
-void MovableElement::detruire()
-{
-
 }

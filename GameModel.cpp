@@ -3,7 +3,7 @@
 using namespace std;
 
 //*********************************************
-//* Constantes                                *
+//  Constantes                                *
 //*********************************************
 const int GameModel::MAX_BEST_SCORES = 5;
 const int GameModel::MODEL_WIDTH = 800;
