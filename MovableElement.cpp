@@ -9,11 +9,11 @@ using namespace std;
 //  Constructeurs                             |
 //=============================================
 MovableElement::MovableElement()
-    : m_x{0}, m_y{0}, m_w{0}, m_h{0}, m_dx{0}, m_dy{0}
+    : m_x{0}, m_y{0}, m_w{0}, m_h{0}, m_dx{0}, m_dy{0}, m_etat{true}
 {}
 
 MovableElement::MovableElement(int x, int y, int w, int h, int dx, int dy)
-    : m_x{x}, m_y{y}, m_w{w}, m_h{h}, m_dx{dx}, m_dy{dy}
+    : m_x{x}, m_y{y}, m_w{w}, m_h{h}, m_dx{dx}, m_dy{dy}, m_etat{true}
 {}
 
 //=============================================
