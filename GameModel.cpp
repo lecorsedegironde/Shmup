@@ -54,5 +54,6 @@ void GameModel::nextStep()
     //Tous les ARR
     //Tous les déplacements
     //...
+
 }
 
