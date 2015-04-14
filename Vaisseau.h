@@ -9,6 +9,7 @@ class Vaisseau : public MovableElement
 protected:
     unsigned int m_idVaisseau;
     unsigned int m_pointDeVie;
+
 public:
     Vaisseau();
     Vaisseau(int x, int y, int w, int h, int dx, int dy, unsigned int id, unsigned int pdv);
