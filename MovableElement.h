@@ -25,7 +25,7 @@ class MovableElement
 
         virtual ~MovableElement();
         virtual bool isAlive();
-        virtual detruire();
+        virtual void detruire();
     protected:
         int m_x;
         int m_y;

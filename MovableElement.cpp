@@ -90,3 +90,13 @@ MovableElement::~MovableElement()
 {
     //dtor
 }
+
+bool MovableElement::isAlive()
+{
+    return true;
+}
+
+void MovableElement::detruire()
+{
+
+}
