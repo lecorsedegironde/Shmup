@@ -22,8 +22,6 @@ public:
 
     void setId(const unsigned int &id);
     void setDegats(const int &d);
-
-
 };
 
 #endif // EXPLOSION_H
