@@ -4,9 +4,21 @@
 
 class MovableElement
 {
+
+protected:
+    int m_x;
+    int m_y;
+    int m_w;
+    int m_h;
+    int m_dx;
+    int m_dy;
+    bool m_etat;
+
 public:
     MovableElement();
     MovableElement(int x, int y, int w, int h, int dx, int dy);
+    virtual ~MovableElement();
+
     int getX() const;
     int getY() const;
     int getW() const;
@@ -23,17 +35,7 @@ public:
     void setDy(const int &dy);
     void setEtat(const bool &etat);
 
-    virtual ~MovableElement();
     virtual void detruire() {}
-
-protected:
-    int m_x;
-    int m_y;
-    int m_w;
-    int m_h;
-    int m_dx;
-    int m_dy;
-    bool m_etat;
 };
 
 #endif // MOVABLE_ELEMENT_H
