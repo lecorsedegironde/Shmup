@@ -8,7 +8,7 @@ using namespace std;
 //  Constructeurs                             |
 //=============================================
 Ennemi::Ennemi()
-    : Vaisseau {}, m_cadenceTir {0}, m_dommages {0}, m_modificateurVitesse {0}, m_valeur {0}
+    : Vaisseau {}, m_dommages {0}, m_modificateurVitesse {0}, m_cadenceTir {0}, m_valeur {0}
 {
     //TODO Ajouter le tir ennemi
 }

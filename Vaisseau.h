@@ -20,7 +20,7 @@ public:
     void setIdVaisseau(const unsigned int &id);
     void setPointDeVie(const unsigned int &pdv);
 
-    virtual void detruire(){}
+    virtual void detruire() {}
 
     virtual void augmenterPv(const int &pdv);
     virtual void diminuerPv(const int &pdv);
