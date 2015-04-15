@@ -13,8 +13,8 @@ Tir::Tir()
     : MovableElement{}, m_id{0}, m_degats{0}, m_delai{0}
 {}
 
-Tir(int x, int y, int w, int h, int dx, int dy, unsigned int id, int degats, int delai)
-    : MovableElement{x, y, w, h, dx, dy}, m_id{id}, m_degats{degats}, m_delai{delai}
+Tir::Tir(int x, int y, int w, int h, int dx, int dy, unsigned int id, int degats, int delai)
+    : MovableElement{x, y, w, h, dx, dy}, m_id {id}, m_degats {degats}, m_delai {delai}
 {}
 
 //=============================================
