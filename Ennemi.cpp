@@ -51,6 +51,25 @@ int Ennemi::getValeur() const
 //=============================================
 //  Setters                                   |
 //=============================================
+void Ennemi::setDommages(const int &d)
+{
+    m_dommages = d;
+}
+
+void Ennemi::setModificateurVitesse(const int &mV)
+{
+    m_modificateurVitesse = mV;
+}
+
+void Ennemi::setCadenceTir(const int &c)
+{
+    m_cadenceTir = c;
+}
+
+void Ennemi::setValeur(const int &v)
+{
+    m_valeur = v;
+}
 
 //=============================================
 //  Fonctions                                 |
