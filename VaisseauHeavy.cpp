@@ -13,6 +13,11 @@ VaisseauHeavy::VaisseauHeavy()
 {
 }
 
+VaisseauHeavy::VaisseauHeavy(int x, int y, int w, int h, int dx, int dy, unsigned int id, unsigned int pdv, int dom, int mVit, int tir, int val)
+    : Ennemi {x, y, w, h, dx, dy, id, pdv, dom, mVit, tir, val}
+{
+}
+
 VaisseauHeavy::~VaisseauHeavy()
 {
 }
