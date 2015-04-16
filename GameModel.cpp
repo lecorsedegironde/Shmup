@@ -1,5 +1,5 @@
 #include "GameModel.h"
-
+#include "Joueur.h"
 using namespace std;
 
 //=============================================
@@ -13,27 +13,35 @@ const int GameModel::MODEL_HEIGHT = 600;
 //  Constructeurs                             |
 //=============================================
 GameModel::GameModel()
-    : _w {MODEL_WIDTH}, _h {MODEL_HEIGHT}, _score {0},
-_malus {0}, _scoreTotal {0}, _combo {0}, _nbLevel {0},
-_quit {false}, _statusJeu {0}, _difficulty {0}, _start {clock()}
+    : m_w {MODEL_WIDTH}, m_h {MODEL_HEIGHT}, m_score {0},
+m_malus {0}, m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
+m_quit {false}, m_statusJeu {0}, m_difficulty {0}, m_start {clock()}
 {
     //TODO Ici initialiser les classes qui ont des relations avec le GameModel
+    m_joueur = new Joueur();
 }
 
 GameModel::GameModel(int w, int h)
-    : _w {w}, _h {h}, _score {0}, _malus {0},
-_scoreTotal {0}, _combo {0}, _nbLevel {0},
-_quit {false}, _statusJeu {0}, _difficulty {0}, _start {clock()}
+    : m_w {w}, m_h {h}, m_score {0}, m_malus {0},
+m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
+m_quit {false}, m_statusJeu {0}, m_difficulty {0}, m_start {clock()}
 {
     //TODO Ici initialiser les classes qui ont des relations avec le GameModel
+    //TODO changer le pop du joueur
+    m_joueur = new Joueur(w/2, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
+    Joueur::JOUEUR_X_SPEED, Joueur::JOUEUR_Y_SPEED, Joueur::JOUEUR_BASE_PV,
+    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD);
 }
 
 GameModel::GameModel(int w, int h, int d)
-    :_w {w}, _h {h}, _score {0}, _malus {0},
-_scoreTotal {0}, _combo {0}, _nbLevel {0},
-_quit {false}, _statusJeu {0}, _difficulty {d}, _start {clock()}
+    : m_w {w}, m_h {h}, m_score {0}, m_malus {0},
+m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
+m_quit {false}, m_statusJeu {0}, m_difficulty {d}, m_start {clock()}
 {
     //TODO Ici initialiser les classes qui ont des relations avec le GameModel
+    m_joueur = new Joueur(w/2, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
+    Joueur::JOUEUR_X_SPEED, Joueur::JOUEUR_Y_SPEED, Joueur::JOUEUR_BASE_PV,
+    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD);
 }
 
 //=============================================
@@ -42,6 +50,10 @@ _quit {false}, _statusJeu {0}, _difficulty {d}, _start {clock()}
 GameModel::~GameModel()
 {
     //TODO Detruire chaque objet initialisé dans le constructeur
+    if (m_joueur != nullptr)
+    {
+        delete m_joueur;
+    }
 }
 
 //=============================================

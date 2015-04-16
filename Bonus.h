@@ -7,14 +7,10 @@
 class Bonus : public MovableElement
 {
 protected:
-    unsigned int m_id;
 public:
     Bonus();
-    Bonus(int x, int y, int w, int h, int dx, int dy, unsigned int id);
+    Bonus(int x, int y, int w, int h, int dx, int dy);
     virtual ~Bonus();
-
-    unsigned int getId() const;
-    void setId(const unsigned int &id);
 };
 
 #endif // BONUS_H

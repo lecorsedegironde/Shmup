@@ -6,6 +6,18 @@
 using namespace std;
 
 //=============================================
+//  Constantes                                |
+//=============================================
+const int Joueur::JOUEUR_WIDTH = 1;
+const int Joueur::JOUEUR_HEIGHT = 1;
+const int Joueur::JOUEUR_X_SPEED = 1;
+const int Joueur::JOUEUR_Y_SPEED = 1;
+const int Joueur::JOUEUR_BASE_PV = 100;
+const int Joueur::JOUEUR_BASE_VIE = 3;
+const int Joueur::JOUEUR_BASE_SHIELD = 0;
+
+
+//=============================================
 //  Constructeurs                             |
 //=============================================
 Joueur::Joueur()
@@ -14,8 +26,8 @@ Joueur::Joueur()
     //TODO Ajout des tirs alliés
 }
 
-Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int id, unsigned int pdv, unsigned int vie, unsigned int s)
-    :Vaisseau {x, y, w, h, dx, dy, id, pdv,}, m_nbVie {vie}, m_shield {s}
+Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s)
+    :Vaisseau {x, y, w, h, dx, dy, pdv,}, m_nbVie {vie}, m_shield {s}
 {
     //TODO Ajout des tirs alliés
 }

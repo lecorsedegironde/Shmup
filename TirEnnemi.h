@@ -9,7 +9,7 @@ private:
 
 public:
     TirEnnemi();
-    TirEnnemi(int x, int y, int w, int h, int dx, int dy, unsigned int id, int degats, int delai);
+    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~TirEnnemi();
 
 };

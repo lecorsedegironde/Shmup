@@ -13,14 +13,12 @@ private:
     int m_distanceLetale;
 public:
     Explosion();
-    Explosion(int x, int y, int w, int h, int dx, int dy, unsigned int id, int degats, int distancce);
+    Explosion(int x, int y, int w, int h, int dx, int dy, int degats, int distancce);
     virtual ~Explosion();
     bool estLetale(Vaisseau * v);
 
-    unsigned int getId() const;
     int getDegats() const;
 
-    void setId(const unsigned int &id);
     void setDegats(const int &d);
 };
 

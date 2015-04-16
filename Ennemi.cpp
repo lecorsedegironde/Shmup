@@ -13,9 +13,9 @@ Ennemi::Ennemi()
     //TODO Ajouter le tir ennemi
 }
 
-Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int id,
-               unsigned int pdv, int dom, int mVit, int tir, int val)
-    : Vaisseau {x, y, w, h, dx, dy, id, pdv}, m_dommages {dom},
+Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
+                int dom, int mVit, int tir, int val)
+    : Vaisseau {x, y, w, h, dx, dy, pdv}, m_dommages {dom},
 m_modificateurVitesse {mVit}, m_cadenceTir {tir}, m_valeur {val}
 {
     //TODO Ajouter le tir ennemi

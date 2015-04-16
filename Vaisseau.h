@@ -7,17 +7,14 @@
 class Vaisseau : public MovableElement
 {
 protected:
-    unsigned int m_idVaisseau;
     unsigned int m_pointDeVie;
 
 public:
     Vaisseau();
-    Vaisseau(int x, int y, int w, int h, int dx, int dy, unsigned int id, unsigned int pdv);
+    Vaisseau(int x, int y, int w, int h, int dx, int dy, unsigned int pdv);
     virtual ~Vaisseau();
 
-    unsigned int getIdVaisseau() const;
     unsigned int getPointDeVie() const;
-    void setIdVaisseau(const unsigned int &id);
     void setPointDeVie(const unsigned int &pdv);
 
     virtual void detruire() {}
