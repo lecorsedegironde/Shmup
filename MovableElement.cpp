@@ -96,3 +96,12 @@ void MovableElement::setEtat(const bool &etat)
 {
     m_etat = etat;
 }
+
+//=============================================
+//  Fonctions                                 |
+//=============================================
+bool testCollision(MovableElement * m1, MovableElement * m2)
+{
+    //TODO Gestion des collisions
+    return true;
+}

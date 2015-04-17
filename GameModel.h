@@ -1,12 +1,16 @@
 #ifndef GAME_MODEL_H
 #define GAME_MODEL_H
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <set>
+
 #include "MovableElement.h"
 #include "Joueur.h"
 #include "Ennemi.h"
+#include "Level.h"
 
 class GameModel
 {
@@ -29,6 +33,9 @@ private:
 
     //Ennemis
     std::vector<Ennemi*> m_ennemi;
+
+    //Tirs
+    std::set<Tir*> m_tirs;
     //TODO Ajouter un argument ou un <vector> pour chaque classe reliée au GameModel
 
 public:
@@ -43,18 +50,16 @@ public:
     virtual ~GameModel();
 
     void nextStep();
-
+    void setLevel(Level * l);
 
     //A décommenter lorsque les classes correspondantes auront été ajoutées
     //*
     void movePlayer(Joueur * j);
     void tirPlayer(Joueur * j);
-    bool testCollision(MovableElement * m1, MovableElement * m2);
     void detruireEnnemi(Ennemi * e);
     bool testFinNiveau();
     bool testFinJeu();
     void nextLevel();
-    std::vector<Ennemi> genLevel();
     //*/
 };
 

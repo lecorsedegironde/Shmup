@@ -74,3 +74,7 @@ void Ennemi::setValeur(const int &v)
 //=============================================
 //  Fonctions                                 |
 //=============================================
+void Ennemi::addTir(TirEnnemi * t)
+{
+    m_tirEnnemi.push_back(t);
+}

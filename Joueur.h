@@ -1,14 +1,19 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include "Vaisseau.h"
+#include <vector>
 
+#include "Vaisseau.h"
+#include "TirAllie.h"
 
 class Joueur : public Vaisseau
 {
 private:
     unsigned int m_nbVie;
     unsigned int m_shield;
+    int m_degats;
+    int m_delai;
+    std::vector<TirAllie*> m_tirs;
 
 public:
     //Les constantes :
@@ -19,6 +24,8 @@ public:
     static const int JOUEUR_BASE_PV;
     static const int JOUEUR_BASE_VIE;
     static const int JOUEUR_BASE_SHIELD;
+    static const int JOUEUR_BASE_DEGATS;
+    static const int JOUEUR_BASE_DELAI;
 
     Joueur();
     Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s);
@@ -29,6 +36,7 @@ public:
     void setNbVie(const unsigned int &vie);
     void setShield(const unsigned int &s);
 
+    void addTir(TirAllie * t);
     void perdreVie();
     void gagnerVie();
     void ameliorerVaisseau();

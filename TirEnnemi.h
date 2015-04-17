@@ -11,7 +11,6 @@ public:
     TirEnnemi();
     TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~TirEnnemi();
-
 };
 
 #endif // TIRENNEMI_H_INCLUDED

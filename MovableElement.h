@@ -36,6 +36,7 @@ public:
     void setEtat(const bool &etat);
 
     virtual void detruire() {}
+    bool testCollision(MovableElement * m1, MovableElement * m2);
 };
 
 #endif // MOVABLE_ELEMENT_H

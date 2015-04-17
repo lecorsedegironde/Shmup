@@ -69,3 +69,20 @@ void GameModel::nextStep()
 
 }
 
+//=============================================
+//  Fonctions                                 |
+//=============================================
+void GameModel::tirPlayer(Joueur * j)
+{
+    //TODO Remplacer w et h par les constantes correspondantes ensuite
+    TirAllie * tirAllie = new TirAllie(j->getX(), j->getY(), 1, 1, 1, 1, j->JOUEUR_BASE_DEGATS, j->JOUEUR_BASE_DELAI);
+
+    m_tirs.insert(tirAllie);
+    j->addTir(tirAllie);
+
+}
+
+void GameModel::setLevel(Level * l)
+{
+    m_ennemi = l->genLevel();
+}

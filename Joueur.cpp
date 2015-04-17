@@ -15,6 +15,8 @@ const int Joueur::JOUEUR_Y_SPEED = 1;
 const int Joueur::JOUEUR_BASE_PV = 100;
 const int Joueur::JOUEUR_BASE_VIE = 3;
 const int Joueur::JOUEUR_BASE_SHIELD = 0;
+const int Joueur::JOUEUR_BASE_DEGATS = 10;
+const int Joueur::JOUEUR_BASE_DELAI = 1;
 
 
 //=============================================
@@ -79,4 +81,9 @@ void Joueur::gagnerVie()
 void Joueur::ameliorerVaisseau()
 {
     //TODO Définir et implémenter l'interface d'amélioration du joueur
+}
+
+void Joueur::addTir(TirAllie *t)
+{
+    m_tirs.push_back(t);
 }

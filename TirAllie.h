@@ -1,5 +1,6 @@
-#ifndef TIRENNEMI_H_INCLUDED
-#define TIRENNEMI_H_INCLUDED
+#ifndef TIR_ALLIE_H_INCLUDED
+#define TIR_ALLIE_H_INCLUDED
+
 
 #include "Tir.h"
 
@@ -11,7 +12,6 @@ public:
     TirAllie();
     TirAllie(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~TirAllie();
-
 };
 
-#endif // TIRENNEMI_H_INCLUDED
+#endif //TIR_ALLIE_H_INCLUDED
