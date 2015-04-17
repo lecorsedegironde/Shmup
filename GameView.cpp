@@ -4,9 +4,9 @@
 
 using namespace std;
 
-const int VIEW_W = 800;
-const int VIEW_H = 600;
-const int VIEW_BPP = 32;
+const int GameView::VIEW_W = 800;
+const int GameView::VIEW_H = 600;
+const int GameView::VIEW_BPP = 32;
 
 GameView::GameView(int w, int h)
     : m_w{w}, m_h{h}
@@ -29,9 +29,22 @@ void GameView::setModel(GameModel * model)
 void GameView::draw()
 {
     //TODO Appeler les draw de chaque classe
+    cout << "YALLAH DESSIN" << endl;
 }
 
-void GameView::treatEvents()
+bool GameView::treatEvents()
 {
+    bool retour = true;
+    string event;
 
+    cout << "====== JEU ======" << endl;
+    cin >> event;
+    cout << event << endl;
+
+    if (event == "quit" || event == "q")
+    {
+        retour = false;
+    }
+
+    return retour;
 }

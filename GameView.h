@@ -9,18 +9,18 @@ private:
     int m_w;
     int m_h;
 
+    GameModel * m_model;
+public:
     static const int VIEW_W;
     static const int VIEW_H;
     static const int VIEW_BPP;
 
-    GameModel * m_model;
-public:
     GameView(int w, int h);
     ~GameView();
 
     void setModel(GameModel * model);
     void draw();
-    void treatEvents();
+    bool treatEvents();
 };
 
 #endif // GAMEVIEW_H
