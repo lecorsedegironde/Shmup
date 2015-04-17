@@ -33,6 +33,7 @@ public:
     void setValeur(const int &v);
 
     void addTir(TirEnnemi * t);
+    std::string toString();
 };
 
 #endif // ENNEMI_H

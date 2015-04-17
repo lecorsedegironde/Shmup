@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "TirEnnemi.h"
+#include "Ennemi.h"
 
 using namespace std;
 
@@ -19,4 +20,16 @@ TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int
 TirEnnemi::~TirEnnemi()
 {}
 
+bool TirEnnemi::estAmi(Vaisseau *v)
+{
+    bool ami = false;
 
+    Ennemi * e = dynamic_cast<Ennemi*>(v);
+
+    if (e != nullptr)
+    {
+        ami = true;
+    }
+
+    return ami;
+}

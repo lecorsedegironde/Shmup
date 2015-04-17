@@ -24,15 +24,11 @@ const int Joueur::JOUEUR_BASE_DELAI = 1;
 //=============================================
 Joueur::Joueur()
     : Vaisseau {}, m_nbVie {0}, m_shield {0}
-{
-    //TODO Ajout des tirs alliés
-}
+{}
 
 Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s)
     :Vaisseau {x, y, w, h, dx, dy, pdv,}, m_nbVie {vie}, m_shield {s}
-{
-    //TODO Ajout des tirs alliés
-}
+{}
 
 //=============================================
 //  Destructeurs                              |

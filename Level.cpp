@@ -20,14 +20,6 @@ Level::Level(const Level& l)
 Level::~Level()
 {}
 
-Level& Level::operator=(const Level& l)
-{
-    //TODO Verifier
-    if (this == &l) return *this; // handle self assignment
-    //assignment operator
-    return *this;
-}
-
 unsigned int Level::getDifficulte() const
 {
     return m_difficulte;
@@ -42,7 +34,7 @@ vector<Ennemi*> Level::genLevel()
 {
     // TODO Remplacer par la génération aléatoire de level
     vector<Ennemi*> level;
-    Ennemi * e = new Ennemi();
+    Ennemi * e = new Ennemi(500, 300, 1, 1, -10, 0, 20, 10, 0, 1, 10);
 
     level.push_back(e);
 

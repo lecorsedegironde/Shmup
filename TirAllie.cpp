@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "TirAllie.h"
+#include "Joueur.h"
 
 using namespace std;
 
@@ -19,4 +20,24 @@ TirAllie::TirAllie(int x, int y, int w, int h, int dx, int dy, int degats, int d
 TirAllie::~TirAllie()
 {}
 
+bool TirAllie::estAmi(Vaisseau * v)
+{
+    bool ami = false;
 
+    Joueur * j = dynamic_cast<Joueur*>(v);
+
+    if (j != nullptr)
+    {
+        ami = true;
+    }
+
+    return ami;
+}
+
+string TirAllie::toString()
+{
+    string str = Tir::toString();
+    str += "Tir Ami\n";
+
+    return str;
+}

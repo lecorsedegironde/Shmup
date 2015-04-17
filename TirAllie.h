@@ -12,6 +12,10 @@ public:
     TirAllie();
     TirAllie(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~TirAllie();
+
+    virtual bool estAmi(Vaisseau * v);
+
+    std::string toString();
 };
 
 #endif //TIR_ALLIE_H_INCLUDED

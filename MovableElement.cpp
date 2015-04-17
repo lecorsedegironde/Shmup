@@ -100,10 +100,20 @@ void MovableElement::setEtat(const bool &etat)
 //=============================================
 //  Fonctions                                 |
 //=============================================
-bool MovableElement::testCollision(MovableElement * m1, MovableElement * m2)
+bool MovableElement::testCollision(MovableElement * m)
 {
     //TODO Gestion des collisions
-    return true;
+    //Pour l'affichage console, comme tous a pour taille (1,1), on se contente de tester les coordonnées
+    bool collision = false;
+    int xM = m->getX();
+    int yM = m->getY();
+
+    if (xM == m_x && yM == m_y)
+    {
+        collision = true;
+    }
+
+    return collision;
 }
 
 string MovableElement::toString()

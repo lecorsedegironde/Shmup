@@ -9,17 +9,13 @@ using namespace std;
 //=============================================
 Ennemi::Ennemi()
     : Vaisseau {}, m_dommages {0}, m_modificateurVitesse {0}, m_cadenceTir {0}, m_valeur {0}
-{
-    //TODO Ajouter le tir ennemi
-}
+{}
 
 Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
                int dom, int mVit, int tir, int val)
     : Vaisseau {x, y, w, h, dx, dy, pdv}, m_dommages {dom},
 m_modificateurVitesse {mVit}, m_cadenceTir {tir}, m_valeur {val}
-{
-    //TODO Ajouter le tir ennemi
-}
+{}
 //=============================================
 //  Destructeurs                              |
 //=============================================
@@ -77,4 +73,10 @@ void Ennemi::setValeur(const int &v)
 void Ennemi::addTir(TirEnnemi * t)
 {
     m_tirEnnemi.push_back(t);
+}
+
+string Ennemi::toString()
+{
+    string str = "Position : (" + to_string(m_x) + "," + to_string(m_y) + ") Valeur : " + to_string(m_valeur) + "\n";
+    return str;
 }

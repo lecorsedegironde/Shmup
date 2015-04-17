@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <set>
 
 #include "MovableElement.h"
 #include "Joueur.h"
@@ -35,8 +34,7 @@ private:
     std::vector<Ennemi*> m_ennemi;
 
     //Tirs
-    std::set<Tir*> m_tirs;
-    //TODO Ajouter un argument ou un <vector> pour chaque classe reliée au GameModel
+    std::vector<Tir*> m_tirs;
 
 public:
     //Constantes
@@ -53,15 +51,14 @@ public:
     void setLevel(Level * l);
     std::string toString();
 
-    //A décommenter lorsque les classes correspondantes auront été ajoutées
-    //*
-    void movePlayer(Joueur * j);
-    void tirPlayer(Joueur * j);
-    void detruireEnnemi(Ennemi * e);
+    void getJoueurPos(int &x, int &y) const;
+    void getJoueurSize(int &w, int &h) const;
+
+    void movePlayer(const int &dx, const int &dy);
+    void tirPlayer();
     bool testFinNiveau();
     bool testFinJeu();
-    void nextLevel();
-    //*/
+    //void nextLevel();
 };
 
 #endif // GAME_MODEL_H

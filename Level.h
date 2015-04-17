@@ -12,7 +12,6 @@ public:
     Level();
     Level(unsigned int difficulte);
     Level(const Level& l);
-    Level& operator=(const Level& l);
     virtual ~Level();
 
     unsigned int getDifficulte() const;
