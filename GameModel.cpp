@@ -54,6 +54,19 @@ GameModel::~GameModel()
     {
         delete m_joueur;
     }
+
+    for (auto it : m_ennemi)
+    {
+        if(it != nullptr)
+            delete it;
+    }
+
+    for (auto it : m_tirs)
+    {
+        if(it != nullptr)
+            delete it;
+    }
+
 }
 
 //=============================================
