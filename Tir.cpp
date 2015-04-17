@@ -10,11 +10,11 @@ using namespace std;
 //=============================================
 
 Tir::Tir()
-    : MovableElement{}, m_degats{0}, m_delai{0}
+    : MovableElement {}, m_degats {0}, m_delai {0}
 {}
 
 Tir::Tir(int x, int y, int w, int h, int dx, int dy, int degats, int delai)
-    : MovableElement{x, y, w, h, dx, dy}, m_degats {degats}, m_delai {delai}
+    : MovableElement {x, y, w, h, dx, dy}, m_degats {degats}, m_delai {delai}
 {}
 
 //=============================================

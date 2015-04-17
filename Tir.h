@@ -16,7 +16,10 @@ public:
     Tir();
     Tir(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~Tir();
-    virtual bool estAmi(){return true;}
+    virtual bool estAmi()
+    {
+        return true;
+    }
 
     int getDegats() const;
     int getDelai() const;

@@ -14,7 +14,7 @@ Ennemi::Ennemi()
 }
 
 Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
-                int dom, int mVit, int tir, int val)
+               int dom, int mVit, int tir, int val)
     : Vaisseau {x, y, w, h, dx, dy, pdv}, m_dommages {dom},
 m_modificateurVitesse {mVit}, m_cadenceTir {tir}, m_valeur {val}
 {

@@ -15,7 +15,7 @@ Explosion::Explosion()
 Explosion::Explosion(int x, int y, int w, int h, int dx, int dy,
                      int degats, int distance)
     : MovableElement {x, y, w, h, dx, dy}, m_degats {degats},
-    m_distanceLetale {distance}
+m_distanceLetale {distance}
 {}
 //=============================================
 //  Destructeurs                              |

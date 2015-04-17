@@ -10,18 +10,18 @@ using namespace std;
 //=============================================
 
 Bonus::Bonus()
-    : MovableElement{}
+    : MovableElement {}
 {}
 
 Bonus::Bonus(int x, int y, int w, int h, int dx, int dy)
-    : MovableElement{x, y, w, h, dx, dy}
+    : MovableElement {x, y, w, h, dx, dy}
 {}
 
 //=============================================
 //  Destructeurs                              |
 //=============================================
 
-Bonus::~Bonus(){}
+Bonus::~Bonus() {}
 
 //=============================================
 //  Getters                                   |
