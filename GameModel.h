@@ -51,6 +51,7 @@ public:
 
     void nextStep();
     void setLevel(Level * l);
+    std::string toString();
 
     //A décommenter lorsque les classes correspondantes auront été ajoutées
     //*

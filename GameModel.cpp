@@ -99,3 +99,11 @@ void GameModel::setLevel(Level * l)
 {
     m_ennemi = l->genLevel();
 }
+
+string GameModel::toString()
+{
+    string str;
+    str += m_joueur->toString();
+
+    return str;
+}

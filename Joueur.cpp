@@ -87,3 +87,12 @@ void Joueur::addTir(TirAllie *t)
 {
     m_tirs.push_back(t);
 }
+
+string Joueur::toString()
+{
+    string str = Vaisseau::toString();
+    str += "Nombre de vies : " + to_string(m_nbVie) + "\n";
+    str += "Bouclier : " + to_string(m_shield) + "\n";
+
+    return str;
+}

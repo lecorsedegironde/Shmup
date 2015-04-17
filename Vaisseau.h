@@ -21,6 +21,8 @@ public:
 
     virtual void augmenterPv(const int &pdv);
     virtual void diminuerPv(const int &pdv);
+
+    virtual std::string toString();
 };
 
 #endif // VAISSEAU_H

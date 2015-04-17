@@ -13,12 +13,7 @@ GameView::GameView(int w, int h)
 {}
 
 GameView::~GameView()
-{
-    if (m_model != nullptr)
-    {
-        delete m_model;
-    }
-}
+{}
 
 
 void GameView::setModel(GameModel * model)
@@ -29,7 +24,7 @@ void GameView::setModel(GameModel * model)
 void GameView::draw()
 {
     //TODO Appeler les draw de chaque classe
-    cout << "YALLAH DESSIN" << endl;
+    cout << m_model->toString() << endl;
 }
 
 bool GameView::treatEvents()

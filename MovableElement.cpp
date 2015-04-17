@@ -100,8 +100,21 @@ void MovableElement::setEtat(const bool &etat)
 //=============================================
 //  Fonctions                                 |
 //=============================================
-bool testCollision(MovableElement * m1, MovableElement * m2)
+bool MovableElement::testCollision(MovableElement * m1, MovableElement * m2)
 {
     //TODO Gestion des collisions
     return true;
+}
+
+string MovableElement::toString()
+{
+    string str = "Position : ";
+    str += "(" + to_string(m_x) + "," + to_string(m_y) + ")\n";
+    str += "Taille : ";
+    str += "(" + to_string(m_w) + "," + to_string(m_h) + ")\n";
+    str += "Déplacement horizontal : " + to_string(m_dx) + "\n";
+    str += "Déplacement vertical : " + to_string(m_dy) + "\n";
+    str += "Etat : " + to_string(m_etat) + "\n";
+
+    return str;
 }

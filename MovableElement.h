@@ -37,6 +37,7 @@ public:
 
     virtual void detruire() {}
     bool testCollision(MovableElement * m1, MovableElement * m2);
+    virtual std::string toString();
 };
 
 #endif // MOVABLE_ELEMENT_H
