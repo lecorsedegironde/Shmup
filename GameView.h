@@ -18,6 +18,18 @@ private:
     sf::Image m_backgroundImage;
     sf::Sprite m_backgroundSprite;
 
+    sf::Image m_buttonImage;
+    sf::Sprite m_buttonSprite;
+
+    sf::Image m_soldierImage;
+    sf::Sprite m_soldierSprite;
+
+    sf::Image m_scoutImage;
+    sf::Sprite m_scoutSprite;
+
+
+
+
     GameModel * m_model;
 public:
     static const int VIEW_W;

@@ -20,15 +20,23 @@ GameView::GameView(int w, int h, int bpp)
 
     m_window->SetFramerateLimit(30);
 
-    if (!m_backgroundImage.LoadFromFile("images/revive.png"))
+    if (!m_backgroundImage.LoadFromFile("images/planet.png") || !m_buttonImage.LoadFromFile("images/buttons.png") || !m_soldierImage.LoadFromFile("images/ennemy_0.png")
+        || !m_scoutImage.LoadFromFile("images/ennemy_3.png"))
     {
         m_backgroundSprite = Sprite ();
+        m_buttonSprite = Sprite();
+        m_soldierSprite = Sprite();
+        m_scoutSprite = Sprite();
     }
     else
     {
-        m_backgroundSprite = Sprite (m_backgroundImage);
+        m_backgroundSprite = Sprite(m_backgroundImage);
         m_backgroundSprite.Resize(m_w, m_h);
         m_backgroundSprite.SetPosition(0,0);
+
+        m_buttonSprite = Sprite(m_buttonImage);
+        m_soldierSprite = Sprite(m_soldierImage);
+        m_scoutSprite = Sprite(m_scoutImage);
     }
 }
 
@@ -48,6 +56,9 @@ void GameView::draw()
 {
     m_window->Clear();
     m_window->Draw(m_backgroundSprite);
+    m_window->Draw(m_buttonSprite);
+    m_window->Draw(m_soldierSprite);
+    m_window->Draw(m_scoutSprite);
     m_window->Display();
 }
 
