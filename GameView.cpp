@@ -21,12 +21,14 @@ GameView::GameView(int w, int h, int bpp)
     m_window->SetFramerateLimit(30);
 
     if (!m_backgroundImage.LoadFromFile("images/planet.png") || !m_buttonImage.LoadFromFile("images/buttons.png") || !m_soldierImage.LoadFromFile("images/ennemy_0.png")
-        || !m_scoutImage.LoadFromFile("images/ennemy_3.png"))
+        || !m_scoutImage.LoadFromFile("images/ennemy_3.png") || !m_tankImage.LoadFromFile("images/ennemy_1.png") || !m_sniperImage.LoadFromFile("images/ennemy_2.png"))
     {
         m_backgroundSprite = Sprite ();
         m_buttonSprite = Sprite();
         m_soldierSprite = Sprite();
         m_scoutSprite = Sprite();
+        m_tankSprite = Sprite();
+        m_sniperSprite = Sprite();
     }
     else
     {
@@ -37,6 +39,8 @@ GameView::GameView(int w, int h, int bpp)
         m_buttonSprite = Sprite(m_buttonImage);
         m_soldierSprite = Sprite(m_soldierImage);
         m_scoutSprite = Sprite(m_scoutImage);
+        m_tankSprite = Sprite(m_tankImage);
+        m_sniperSprite = Sprite(m_sniperImage);
     }
 }
 
@@ -59,6 +63,8 @@ void GameView::draw()
     m_window->Draw(m_buttonSprite);
     m_window->Draw(m_soldierSprite);
     m_window->Draw(m_scoutSprite);
+    m_window->Draw(m_tankSprite);
+    m_window->Draw(m_sniperSprite);
     m_window->Display();
 }
 

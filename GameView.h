@@ -13,6 +13,8 @@ private:
     int m_h;
     int m_bpp;
 
+    //TODO Add all sprites
+
     sf::RenderWindow * m_window;
 
     sf::Image m_backgroundImage;
@@ -27,6 +29,20 @@ private:
     sf::Image m_scoutImage;
     sf::Sprite m_scoutSprite;
 
+    sf::Image m_tankImage;
+    sf::Sprite m_tankSprite;
+
+    sf::Image m_sniperImage;
+    sf::Sprite m_sniperSprite;
+
+    sf::Image m_bossImage;
+    sf::Sprite m_bossSprite;
+
+    sf::Image m_explosionImage;
+    sf::Sprite m_explosionSprite;
+
+    sf::Image m_shotImage;
+    sf::Sprite m_shotSprite;
 
 
 
