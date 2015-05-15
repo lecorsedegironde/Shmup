@@ -215,6 +215,12 @@ void GameModel::getJoueurSize(int &w, int &h) const
     h = m_joueur->getH();
 }
 
+void GameModel::setJoueurPos(int x, int y)
+{
+    m_joueur->setX(x);
+    m_joueur->setY(y);
+}
+
 bool GameModel::testFinNiveau()
 {
     bool finNiveau = false;

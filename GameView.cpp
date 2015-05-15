@@ -16,32 +16,14 @@ GameView::GameView(int w, int h)
 GameView::GameView(int w, int h, int bpp)
     : m_w {w}, m_h {h}, m_bpp {bpp}
 {
-    m_window = new RenderWindow(sf::VideoMode(w, h, bpp), "Shmup", sf::Style::Close);
+    m_window = new RenderWindow(VideoMode(w, h, bpp), "Shmup", Style::Close);
 
     m_window->SetFramerateLimit(30);
 
-    if (!m_backgroundImage.LoadFromFile("images/planet.png") || !m_buttonImage.LoadFromFile("images/buttons.png") || !m_soldierImage.LoadFromFile("images/ennemy_0.png")
-        || !m_scoutImage.LoadFromFile("images/ennemy_3.png") || !m_tankImage.LoadFromFile("images/ennemy_1.png") || !m_sniperImage.LoadFromFile("images/ennemy_2.png"))
-    {
-        m_backgroundSprite = Sprite ();
-        m_buttonSprite = Sprite();
-        m_soldierSprite = Sprite();
-        m_scoutSprite = Sprite();
-        m_tankSprite = Sprite();
-        m_sniperSprite = Sprite();
-    }
-    else
-    {
-        m_backgroundSprite = Sprite(m_backgroundImage);
-        m_backgroundSprite.Resize(m_w, m_h);
-        m_backgroundSprite.SetPosition(0,0);
+    //CHargement des sprites
+    initSprites();
 
-        m_buttonSprite = Sprite(m_buttonImage);
-        m_soldierSprite = Sprite(m_soldierImage);
-        m_scoutSprite = Sprite(m_scoutImage);
-        m_tankSprite = Sprite(m_tankImage);
-        m_sniperSprite = Sprite(m_sniperImage);
-    }
+
 }
 
 GameView::~GameView()
@@ -58,13 +40,20 @@ void GameView::setModel(GameModel * model)
 
 void GameView::draw()
 {
+    //On récupére les positions
+    int xJoueur, yJoueur;
+    //int wJoueur, hJoueur;
+    m_model->getJoueurPos(xJoueur, yJoueur);
+    //m_model->getJoueurSize(wJoueur, hJoueur);
+    m_playerSprite.SetPosition(xJoueur, yJoueur);
+    //m_playerSprite.Resize(wJoueur, hJoueur);
+
+    //On dessine
     m_window->Clear();
     m_window->Draw(m_backgroundSprite);
-    m_window->Draw(m_buttonSprite);
-    m_window->Draw(m_soldierSprite);
-    m_window->Draw(m_scoutSprite);
-    m_window->Draw(m_tankSprite);
-    m_window->Draw(m_sniperSprite);
+    m_window->Draw(m_playerSprite);
+
+
     m_window->Display();
 }
 
@@ -87,14 +76,88 @@ bool GameView::treatEvents()
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Z))
             {
-
+                int xJoueur, yJoueur;
+                m_model->getJoueurPos(xJoueur, yJoueur);
+                m_model->setJoueurPos(xJoueur, yJoueur-5);
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::S))
             {
-
+                int xJoueur, yJoueur;
+                m_model->getJoueurPos(xJoueur, yJoueur);
+                m_model->setJoueurPos(xJoueur, yJoueur+5);
+            }
+            else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Q))
+            {
+                int xJoueur, yJoueur;
+                m_model->getJoueurPos(xJoueur, yJoueur);
+                m_model->setJoueurPos(xJoueur-5, yJoueur);
+            }
+            else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::D))
+            {
+                int xJoueur, yJoueur;
+                m_model->getJoueurPos(xJoueur, yJoueur);
+                m_model->setJoueurPos(xJoueur+5, yJoueur);
             }
         }
     }
 
     return retour;
+}
+
+//TODO Add the use of different sprites style
+void GameView::initSprites()
+{
+    //On créée des sprites vides au cas ou ça plante
+    m_backgroundSprite = Sprite ();
+    m_buttonSprite = Sprite();
+    m_ennemySprite = Sprite();
+    m_bossSprite = Sprite();
+    m_explosionSprite = Sprite();
+    m_playerSprite = Sprite();
+    m_shotSprite = Sprite();
+
+    if(m_backgroundImage.LoadFromFile("images/planet.png"))
+    {
+        m_backgroundSprite = Sprite(m_backgroundImage);
+        m_backgroundSprite.Resize(m_w, m_h);
+        m_backgroundSprite.SetPosition(0,0);
+    }
+
+    if(m_buttonImage.LoadFromFile("images/buttons.png"))
+    {
+        m_buttonSprite = Sprite(m_buttonImage);
+    }
+
+    if(m_ennemyImage.LoadFromFile("images/ennemy.png"))
+    {
+        m_ennemySprite = Sprite(m_ennemyImage);
+    }
+
+    if(m_bossImage.LoadFromFile("images/boss.png"))
+    {
+        m_bossSprite = Sprite(m_bossImage);
+    }
+
+    if(m_explosionImage.LoadFromFile("images/explosion.png"))
+    {
+        m_explosionSprite = Sprite(m_explosionImage);
+    }
+
+    if(m_playerImage.LoadFromFile("images/player.png"))
+    {
+        m_playerSprite = Sprite(m_playerImage);
+    }
+
+    if(m_shotImage.LoadFromFile("images/shot.png"))
+    {
+        m_shotSprite = Sprite(m_shotSprite);
+    }
+
+
+
+
+
+
+
+
 }

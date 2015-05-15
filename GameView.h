@@ -23,17 +23,11 @@ private:
     sf::Image m_buttonImage;
     sf::Sprite m_buttonSprite;
 
-    sf::Image m_soldierImage;
-    sf::Sprite m_soldierSprite;
+    sf::Image m_playerImage;
+    sf::Sprite m_playerSprite;
 
-    sf::Image m_scoutImage;
-    sf::Sprite m_scoutSprite;
-
-    sf::Image m_tankImage;
-    sf::Sprite m_tankSprite;
-
-    sf::Image m_sniperImage;
-    sf::Sprite m_sniperSprite;
+    sf::Image m_ennemyImage;
+    sf::Sprite m_ennemySprite;
 
     sf::Image m_bossImage;
     sf::Sprite m_bossSprite;
@@ -44,6 +38,7 @@ private:
     sf::Image m_shotImage;
     sf::Sprite m_shotSprite;
 
+    void initSprites();
 
 
     GameModel * m_model;

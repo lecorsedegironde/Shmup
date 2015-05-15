@@ -10,7 +10,7 @@ int main()
     //srand(time(NULL));
 
     GameModel * model = new GameModel(GameModel::MODEL_WIDTH, GameModel::MODEL_HEIGHT);
-    GameView * view = new GameView(GameView::VIEW_W, GameView::VIEW_H);
+    GameView * view = new GameView(GameView::VIEW_W, GameView::VIEW_H, GameView::VIEW_BPP);
 
     Level * l = new Level();
     model->setLevel(l);
