@@ -54,6 +54,8 @@ public:
     void getJoueurPos(int &x, int &y) const;
     void getJoueurSize(int &w, int &h) const;
 
+    std::vector<Tir*> getTir();
+
     void setJoueurPos(int x, int y);
 
     void movePlayer(const int &dx, const int &dy);

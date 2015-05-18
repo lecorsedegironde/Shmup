@@ -215,6 +215,11 @@ void GameModel::getJoueurSize(int &w, int &h) const
     h = m_joueur->getH();
 }
 
+vector<Tir*> GameModel::getTir()
+{
+    return m_tirs;
+}
+
 void GameModel::setJoueurPos(int x, int y)
 {
     m_joueur->setX(x);

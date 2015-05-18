@@ -40,6 +40,8 @@ void GameView::setModel(GameModel * model)
 
 void GameView::draw()
 {
+    m_window->Clear();
+    m_window->Draw(m_backgroundSprite);
     //On récupére les positions
     int xJoueur, yJoueur;
     //int wJoueur, hJoueur;
@@ -48,18 +50,26 @@ void GameView::draw()
     m_playerSprite.SetPosition(xJoueur, yJoueur);
     //m_playerSprite.Resize(wJoueur, hJoueur);
 
+    //On récupère les tirs
+    for(auto it : m_model->getTir())
+    {
+        cout << it->getX() << " " << it->getY() << endl;
+        m_shotSprite.SetSubRect(IntRect(14, 77, 91, 122));
+        int xTir = it->getX();
+        int yTir =  it->getY();
+        m_shotSprite.SetPosition(xTir, yTir);
+        m_window->Draw(m_shotSprite);
+    }
     //On dessine
-    m_window->Clear();
-    m_window->Draw(m_backgroundSprite);
-    m_window->Draw(m_playerSprite);
 
+    m_window->Draw(m_playerSprite);
 
     m_window->Display();
 }
 
 bool GameView::treatEvents()
 {
-    //TODO Déplacements
+    //TODO Déplacements avec dx et dy
     bool retour = false;
 
     if(m_window->IsOpened())
@@ -97,6 +107,10 @@ bool GameView::treatEvents()
                 int xJoueur, yJoueur;
                 m_model->getJoueurPos(xJoueur, yJoueur);
                 m_model->setJoueurPos(xJoueur+5, yJoueur);
+            }
+            else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Space))
+            {
+                m_model->tirPlayer();
             }
         }
     }
@@ -150,7 +164,7 @@ void GameView::initSprites()
 
     if(m_shotImage.LoadFromFile("images/shot.png"))
     {
-        m_shotSprite = Sprite(m_shotSprite);
+        m_shotSprite = Sprite(m_shotImage);
     }
 
 
