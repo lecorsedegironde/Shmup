@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "MovableElement.h"
+#include "GameModel.h"
 
 using namespace std;
 
@@ -114,6 +115,18 @@ bool MovableElement::testCollision(MovableElement * m)
     }
 
     return collision;
+}
+
+void MovableElement::isOnScreen()
+{
+    int widthScreen = GameModel::MODEL_WIDTH;
+    int heightScreen = GameModel::MODEL_HEIGHT;
+
+    if ((m_h < 0) || (m_h > heightScreen) || (m_w < 0) || (m_w > widthScreen))
+    {
+        m_etat = false;
+    }
+
 }
 
 string MovableElement::toString()
