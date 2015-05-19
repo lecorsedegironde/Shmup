@@ -215,7 +215,13 @@ void GameModel::getJoueurSize(int &w, int &h) const
     h = m_joueur->getH();
 }
 
-vector<Tir*> GameModel::getTir()
+void GameModel::getJoueurSpeed(int &dx, int &dy) const
+{
+    dx = m_joueur->getDx();
+    dy = m_joueur->getDy();
+}
+
+vector<Tir*> GameModel::getTir() const
 {
     return m_tirs;
 }
@@ -224,6 +230,12 @@ void GameModel::setJoueurPos(int x, int y)
 {
     m_joueur->setX(x);
     m_joueur->setY(y);
+}
+
+void GameModel::setJoueurSpeed(int dx, int dy)
+{
+    m_joueur->setDx(dx);
+    m_joueur->setDy(dy);
 }
 
 bool GameModel::testFinNiveau()

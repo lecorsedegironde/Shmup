@@ -10,8 +10,8 @@ using namespace std;
 //=============================================
 const int Joueur::JOUEUR_WIDTH = 1;
 const int Joueur::JOUEUR_HEIGHT = 1;
-const int Joueur::JOUEUR_X_SPEED = 1;
-const int Joueur::JOUEUR_Y_SPEED = 1;
+const int Joueur::JOUEUR_X_SPEED = 5;
+const int Joueur::JOUEUR_Y_SPEED = 5;
 const int Joueur::JOUEUR_BASE_PV = 100;
 const int Joueur::JOUEUR_BASE_VIE = 3;
 const int Joueur::JOUEUR_BASE_SHIELD = 0;

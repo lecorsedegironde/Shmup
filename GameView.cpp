@@ -69,7 +69,7 @@ void GameView::draw()
 
 bool GameView::treatEvents()
 {
-    //TODO Déplacements avec dx et dy
+    //TODO Déplacements plus élégants
     bool retour = false;
 
     if(m_window->IsOpened())
@@ -86,27 +86,43 @@ bool GameView::treatEvents()
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Z))
             {
-                int xJoueur, yJoueur;
-                m_model->getJoueurPos(xJoueur, yJoueur);
-                m_model->setJoueurPos(xJoueur, yJoueur-5);
+                int dxJoueur, dyJoueur;
+                m_model->getJoueurSpeed(dxJoueur, dyJoueur);
+
+                dyJoueur = -Joueur::JOUEUR_X_SPEED;
+                dxJoueur = 0;
+
+                m_model->setJoueurSpeed(dxJoueur, dyJoueur);
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::S))
             {
-                int xJoueur, yJoueur;
-                m_model->getJoueurPos(xJoueur, yJoueur);
-                m_model->setJoueurPos(xJoueur, yJoueur+5);
+                int dxJoueur, dyJoueur;
+                m_model->getJoueurSpeed(dxJoueur, dyJoueur);
+
+                dyJoueur = Joueur::JOUEUR_X_SPEED;
+                dxJoueur = 0;
+
+                m_model->setJoueurSpeed(dxJoueur, dyJoueur);
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Q))
             {
-                int xJoueur, yJoueur;
-                m_model->getJoueurPos(xJoueur, yJoueur);
-                m_model->setJoueurPos(xJoueur-5, yJoueur);
+                int dxJoueur, dyJoueur;
+                m_model->getJoueurSpeed(dxJoueur, dyJoueur);
+
+                dyJoueur = 0;
+                dxJoueur = -Joueur::JOUEUR_Y_SPEED;
+
+                m_model->setJoueurSpeed(dxJoueur, dyJoueur);
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::D))
             {
-                int xJoueur, yJoueur;
-                m_model->getJoueurPos(xJoueur, yJoueur);
-                m_model->setJoueurPos(xJoueur+5, yJoueur);
+                int dxJoueur, dyJoueur;
+                m_model->getJoueurSpeed(dxJoueur, dyJoueur);
+
+                dyJoueur = 0;
+                dxJoueur = Joueur::JOUEUR_Y_SPEED;
+
+                m_model->setJoueurSpeed(dxJoueur, dyJoueur);
             }
             else if ((event.Type == Event::KeyPressed) && (event.Key.Code == sf::Key::Space))
             {
@@ -166,12 +182,4 @@ void GameView::initSprites()
     {
         m_shotSprite = Sprite(m_shotImage);
     }
-
-
-
-
-
-
-
-
 }
