@@ -83,12 +83,24 @@ void GameModel::nextStep()
 
         for(auto it : m_ennemi)
         {
+            int x = it->getX();
+            int y = it->getY();
+            //L'ennemi sort de l'écran ?
+            isOnScreen(it);
+
+            cout << "Etat : "<< it->getEtat() << endl;
+
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY()+ it->getDy());
         }
 
         for(auto it : m_tirs)
         {
+            //Le tir sort de l'écran ?
+            isOnScreen(it);
+
+            cout << "Etat : "<< it->getEtat() << endl;
+
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY()+ it->getDy());
         }
@@ -103,7 +115,7 @@ void GameModel::nextStep()
             }
         }
 
-        for (auto it : m_tirs)  //Tirs <-> Joueur
+        /*for (auto it : m_tirs)  //Tirs <-> Joueur
         {
             if(m_joueur->testCollision(it)  && it->getEtat())
             {
@@ -111,7 +123,7 @@ void GameModel::nextStep()
                     m_joueur->diminuerPv(it->getDegats());
                 it->setEtat(false);
             }
-        }
+        }*/
 
         for (auto itTir : m_tirs)  //Tirs <-> Ennemis
         {
@@ -156,6 +168,18 @@ void GameModel::nextStep()
         cout << "Niveau Fini" << endl << endl;
     }
 
+    int itTirs = 0;
+    for (auto it : m_tirs)
+    {
+        bool test = it->getEtat();
+        if(!test)
+        {
+            m_tirs.erase(m_tirs.begin()+itTirs);
+            delete it;
+        }
+        itTirs++;
+    }
+
 }
 
 //=============================================
@@ -164,16 +188,12 @@ void GameModel::nextStep()
 void GameModel::tirPlayer()
 {
     //TODO Remplacer w et h par les constantes correspondantes ensuite
-    TirAllie * tirAllie = new TirAllie(m_joueur->getX(), m_joueur->getY(), 1, 1, 1, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
+    TirAllie * tirAllie = new TirAllie(m_joueur->getX(), m_joueur->getY(), 1, 1, 10, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
+
+    bool test = tirAllie->getEtat();
 
     m_tirs.push_back(tirAllie);
     m_joueur->addTir(tirAllie);
-}
-
-void GameModel::movePlayer(const int &dx, const int &dy)
-{
-    m_joueur->setDx(dx);
-    m_joueur->setDy(dy);
 }
 
 void GameModel::setLevel(Level * l)
@@ -226,6 +246,11 @@ vector<Tir*> GameModel::getTir() const
     return m_tirs;
 }
 
+vector<Ennemi*> GameModel::getEnnemi() const
+{
+    return m_ennemi;
+}
+
 void GameModel::setJoueurPos(int x, int y)
 {
     m_joueur->setX(x);
@@ -260,4 +285,16 @@ bool GameModel::testFinJeu()
     }
 
     return finJeu;
+}
+
+void GameModel::isOnScreen(MovableElement * m)
+{
+    int widthScreen = GameModel::MODEL_WIDTH;
+    int heightScreen = GameModel::MODEL_HEIGHT;
+
+    if (m->getX() < 0 || m->getX() /*+ m->getH()*/ > widthScreen || m->getY() < 0 || m->getY() /*+ m->getW()*/ > heightScreen)
+    {
+        m->setEtat(false);
+    }
+
 }

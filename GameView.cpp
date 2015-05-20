@@ -40,9 +40,11 @@ void GameView::setModel(GameModel * model)
 
 void GameView::draw()
 {
+    //On clear l'écran et on dessine le fond
     m_window->Clear();
     m_window->Draw(m_backgroundSprite);
-    //On récupére les positions
+
+    //On récupère les positions
     int xJoueur, yJoueur;
     //int wJoueur, hJoueur;
     m_model->getJoueurPos(xJoueur, yJoueur);
@@ -60,6 +62,16 @@ void GameView::draw()
         m_shotSprite.SetPosition(xTir, yTir);
         m_window->Draw(m_shotSprite);
     }
+
+    //On récupère les ennemis
+    for (auto it : m_model->getEnnemi())
+    {
+        cout << "Ennemi : " << it->getX() << " " << it->getY() << endl;
+        m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
+        m_ennemySprite.SetPosition(it->getX(), it->getY());
+        m_window->Draw(m_ennemySprite);
+    }
+
     //On dessine
 
     m_window->Draw(m_playerSprite);
