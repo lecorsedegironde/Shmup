@@ -49,11 +49,4 @@ void Vaisseau::diminuerPv(const int &pdv)
     m_pointDeVie -= pdv;
 }
 
-string Vaisseau::toString()
-{
-    string str = MovableElement::toString();
-    str += "Points de vie : " + to_string(m_pointDeVie) + "\n";
-
-    return str;
-}
 

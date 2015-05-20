@@ -9,7 +9,7 @@ private:
 
 public:
     VaisseauHeavy();
-    VaisseauHeavy(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, int dom, int mVit, int tir, int val);
+    VaisseauHeavy(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int id, int dom, int mVit, int tir, int val);
     virtual ~VaisseauHeavy();
 
 };

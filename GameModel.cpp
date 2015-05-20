@@ -81,14 +81,14 @@ void GameModel::nextStep()
         m_joueur->setX(m_joueur->getX() + m_joueur->getDx());
         m_joueur->setY(m_joueur->getY()+ m_joueur->getDy());
 
+        isOnScreen(m_joueur);
+
         for(auto it : m_ennemi)
         {
-            int x = it->getX();
-            int y = it->getY();
             //L'ennemi sort de l'écran ?
-            isOnScreen(it);
+            it->setEtat(isOnScreen(it));
 
-            cout << "Etat : "<< it->getEtat() << endl;
+            //cout << "Etat : "<< it->getEtat() << endl;
 
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY()+ it->getDy());
@@ -97,9 +97,7 @@ void GameModel::nextStep()
         for(auto it : m_tirs)
         {
             //Le tir sort de l'écran ?
-            isOnScreen(it);
-
-            cout << "Etat : "<< it->getEtat() << endl;
+            it->setEtat(isOnScreen(it));
 
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY()+ it->getDy());
@@ -115,15 +113,15 @@ void GameModel::nextStep()
             }
         }
 
-        /*for (auto it : m_tirs)  //Tirs <-> Joueur
+        for (auto it : m_tirs)  //Tirs <-> Joueur
         {
-            if(m_joueur->testCollision(it)  && it->getEtat())
+            if(m_joueur->testCollision(it) && it->getEtat())
             {
                 if (!it->estAmi(m_joueur))
                     m_joueur->diminuerPv(it->getDegats());
                 it->setEtat(false);
             }
-        }*/
+        }
 
         for (auto itTir : m_tirs)  //Tirs <-> Ennemis
         {
@@ -131,9 +129,11 @@ void GameModel::nextStep()
             {
                 for (auto itEnnemi : m_ennemi)
                 {
-                    if (!itTir->estAmi(itEnnemi)  && itEnnemi->getEtat())
+                    if (!itTir->estAmi(itEnnemi)  && itEnnemi->getEtat() && itTir->testCollision(itEnnemi))
+                    {
                         itEnnemi->diminuerPv(itTir->getDegats());
-                    itTir->setEtat(false);
+                        itTir->setEtat(false);
+                    }
                 }
             }
         }
@@ -144,7 +144,7 @@ void GameModel::nextStep()
             {
                 for (auto itEnnemi2 : m_ennemi)
                 {
-                    if(itEnnemi1->testCollision(itEnnemi2))
+                    if(itEnnemi1->testCollision(itEnnemi2) && itEnnemi1->getId() != itEnnemi2->getId())
                     {
                         itEnnemi1->setEtat(false);
                         itEnnemi2->setEtat(false);
@@ -166,6 +166,8 @@ void GameModel::nextStep()
     else
     {
         cout << "Niveau Fini" << endl << endl;
+        nextLevel();
+        finNiveau = false;
     }
 
     int itTirs = 0;
@@ -180,6 +182,18 @@ void GameModel::nextStep()
         itTirs++;
     }
 
+    int itEnnemi = 0;
+    for (auto it : m_ennemi)
+    {
+        bool test = it->getEtat();
+        if(!test)
+        {
+            //itEnnemi--;
+            m_ennemi.erase(m_ennemi.begin()+itEnnemi);
+            delete it;
+        }
+        itEnnemi++;
+    }
 }
 
 //=============================================
@@ -190,8 +204,6 @@ void GameModel::tirPlayer()
     //TODO Remplacer w et h par les constantes correspondantes ensuite
     TirAllie * tirAllie = new TirAllie(m_joueur->getX(), m_joueur->getY(), 1, 1, 10, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
 
-    bool test = tirAllie->getEtat();
-
     m_tirs.push_back(tirAllie);
     m_joueur->addTir(tirAllie);
 }
@@ -199,28 +211,6 @@ void GameModel::tirPlayer()
 void GameModel::setLevel(Level * l)
 {
     m_ennemi = l->genLevel();
-}
-
-string GameModel::toString()
-{
-    string str;
-    str += "Joueur : " + m_joueur->toString();
-
-    str += "Ennemis : \n";
-
-    for(auto it : m_ennemi)
-    {
-        if (it->getEtat())
-            str += it->toString();
-    }
-
-    for(auto it : m_tirs)
-    {
-        if (it->getEtat())
-            str+= it->toString();
-    }
-
-    return str;
 }
 
 void GameModel::getJoueurPos(int &x, int &y) const
@@ -287,14 +277,28 @@ bool GameModel::testFinJeu()
     return finJeu;
 }
 
-void GameModel::isOnScreen(MovableElement * m)
+bool GameModel::isOnScreen(MovableElement * m)
 {
+    bool retour = true;
     int widthScreen = GameModel::MODEL_WIDTH;
     int heightScreen = GameModel::MODEL_HEIGHT;
 
-    if (m->getX() < 0 || m->getX() /*+ m->getH()*/ > widthScreen || m->getY() < 0 || m->getY() /*+ m->getW()*/ > heightScreen)
+    if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
     {
-        m->setEtat(false);
+        retour = false;
+        cout << "Etat POK" << endl;
+    }
+    else
+    {
+        cout << "Etat OK" << endl;
     }
 
+    return retour;
+}
+
+void GameModel::nextLevel()
+{
+    Level * l = new Level();
+    setLevel(l);
+    delete l;
 }

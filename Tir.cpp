@@ -55,12 +55,6 @@ void Tir::setDelai(const int &delai)
 //=============================================
 //  Fonctions                                 |
 //=============================================
-string Tir::toString()
-{
-    string str = "Position : (" + to_string(m_x) + "," + to_string(m_y) + ")\n";
-    str += "Dégats : " + to_string(m_degats) + "\n";
-    return str;
-}
 
 bool Tir::estAmi(Vaisseau * v)
 {

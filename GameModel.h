@@ -49,7 +49,6 @@ public:
 
     void nextStep();
     void setLevel(Level * l);
-    std::string toString();
 
     void getJoueurPos(int &x, int &y) const;
     void getJoueurSize(int &w, int &h) const;
@@ -65,9 +64,9 @@ public:
     bool testFinNiveau();
     bool testFinJeu();
 
-    void isOnScreen(MovableElement * m);
+    bool isOnScreen(MovableElement * m);
 
-    //void nextLevel();
+    void nextLevel();
 };
 
 #endif // GAME_MODEL_H

@@ -55,7 +55,6 @@ void GameView::draw()
     //On récupère les tirs
     for(auto it : m_model->getTir())
     {
-        cout << it->getX() << " " << it->getY() << endl;
         m_shotSprite.SetSubRect(IntRect(14, 77, 91, 122));
         int xTir = it->getX();
         int yTir =  it->getY();
@@ -66,7 +65,6 @@ void GameView::draw()
     //On récupère les ennemis
     for (auto it : m_model->getEnnemi())
     {
-        cout << "Ennemi : " << it->getX() << " " << it->getY() << endl;
         m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
         m_ennemySprite.SetPosition(it->getX(), it->getY());
         m_window->Draw(m_ennemySprite);

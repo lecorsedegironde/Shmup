@@ -40,8 +40,6 @@ public:
     void perdreVie();
     void gagnerVie();
     void ameliorerVaisseau();
-
-    virtual std::string toString();
 };
 
 #endif // JOUEUR_H

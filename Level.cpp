@@ -32,11 +32,17 @@ void Level::setDifficulte(const unsigned int &d)
 
 vector<Ennemi*> Level::genLevel()
 {
+    int idEnnemi = 0;
     // TODO Remplacer par la génération aléatoire de level
     vector<Ennemi*> level;
-    Ennemi * e = new Ennemi(500, 300, 1, 1, -10, 0, 20, 10, 0, 1, 10);
+    Ennemi * e1 = new Ennemi(500, 300, 1, 1, -10, 0, 20, idEnnemi, 10, 0, 1, 10);
+    idEnnemi++;
 
-    level.push_back(e);
+    Ennemi * e2 = new Ennemi(700, 400, 1, 1, -10, 0, 20, idEnnemi, 10, 0, 1, 10);
+    idEnnemi++;
+
+    level.push_back(e1);
+    level.push_back(e2);
 
     return level;
 }

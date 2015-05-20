@@ -33,11 +33,3 @@ bool TirAllie::estAmi(Vaisseau * v)
 
     return ami;
 }
-
-string TirAllie::toString()
-{
-    string str = Tir::toString();
-    str += "Tir Ami\n";
-
-    return str;
-}

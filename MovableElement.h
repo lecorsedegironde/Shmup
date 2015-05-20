@@ -38,7 +38,6 @@ public:
 
     virtual void detruire() {}  //Pour certains types -> Produire une explosion
     virtual bool testCollision(MovableElement * m);
-    virtual std::string toString();
 };
 
 

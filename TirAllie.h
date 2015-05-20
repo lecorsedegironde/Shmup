@@ -14,8 +14,6 @@ public:
     virtual ~TirAllie();
 
     virtual bool estAmi(Vaisseau * v);
-
-    std::string toString();
 };
 
 #endif //TIR_ALLIE_H_INCLUDED

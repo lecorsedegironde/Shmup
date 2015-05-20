@@ -23,9 +23,6 @@ public:
 
     void setDegats(const int &d);
     void setDelai(const int &delai);
-
-    virtual std::string toString();
-
 };
 
 #endif // TIR_H
