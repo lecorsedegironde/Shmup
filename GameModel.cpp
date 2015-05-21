@@ -63,11 +63,10 @@ GameModel::~GameModel()
         if(it != nullptr)
             delete it;
     }
-
 }
 
 //=============================================
-//  Prochaine Etape                           |
+//  Prochaine Étape                           |
 //=============================================
 void GameModel::nextStep()
 {
@@ -87,8 +86,6 @@ void GameModel::nextStep()
         {
             //L'ennemi sort de l'écran ?
             it->setEtat(isOnScreen(it));
-
-            //cout << "Etat : "<< it->getEtat() << endl;
 
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY()+ it->getDy());
@@ -165,34 +162,45 @@ void GameModel::nextStep()
     }
     else
     {
+        //TODO Virer ça !
         cout << "Niveau Fini" << endl << endl;
         nextLevel();
         finNiveau = false;
     }
 
-    int itTirs = 0;
+    /**
+    * Ici on retire les éléments qu'il n'y a plus besoin d'afficher
+    **/
+    int position = 0;
+    vector<int> toDelete;
+
     for (auto it : m_tirs)
     {
         bool test = it->getEtat();
         if(!test)
         {
-            m_tirs.erase(m_tirs.begin()+itTirs);
-            delete it;
+            toDelete.push_back(position);
         }
-        itTirs++;
+        position++;
     }
 
-    int itEnnemi = 0;
+    for (auto i : toDelete)
+    {
+        delete m_tirs[i];
+        m_tirs.erase(m_tirs.begin()+i);
+    }
+    toDelete.clear();
+
+    position = 0;
     for (auto it : m_ennemi)
     {
         bool test = it->getEtat();
         if(!test)
         {
-            //itEnnemi--;
-            m_ennemi.erase(m_ennemi.begin()+itEnnemi);
+            m_ennemi.erase(m_ennemi.begin()+position);
             delete it;
         }
-        itEnnemi++;
+        position++;
     }
 }
 
@@ -201,7 +209,6 @@ void GameModel::nextStep()
 //=============================================
 void GameModel::tirPlayer()
 {
-    //TODO Remplacer w et h par les constantes correspondantes ensuite
     TirAllie * tirAllie = new TirAllie(m_joueur->getX(), m_joueur->getY(), 1, 1, 10, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
 
     m_tirs.push_back(tirAllie);
@@ -241,13 +248,19 @@ vector<Ennemi*> GameModel::getEnnemi() const
     return m_ennemi;
 }
 
-void GameModel::setJoueurPos(int x, int y)
+void GameModel::setJoueurPos(const int &x, const int &y)
 {
     m_joueur->setX(x);
     m_joueur->setY(y);
 }
 
-void GameModel::setJoueurSpeed(int dx, int dy)
+void GameModel::setJoueurSize(const int &w, const int &h)
+{
+    m_joueur->setW(w);
+    m_joueur->setH(h);
+}
+
+void GameModel::setJoueurSpeed(const int &dx,const int &dy)
 {
     m_joueur->setDx(dx);
     m_joueur->setDy(dy);
@@ -277,25 +290,64 @@ bool GameModel::testFinJeu()
     return finJeu;
 }
 
+/**
+* Gestion de deux scénarios différents : ennemis qui peuvent avoir des y très élevés
+* et les autres : scénario classique
+**/
 bool GameModel::isOnScreen(MovableElement * m)
 {
     bool retour = true;
     int widthScreen = GameModel::MODEL_WIDTH;
     int heightScreen = GameModel::MODEL_HEIGHT;
 
-    if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
+    Ennemi * e = dynamic_cast<Ennemi*>(m);
+
+    // Si c'est un ennemi
+    if (e != nullptr)
     {
-        retour = false;
-        cout << "Etat POK" << endl;
+        if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0)
+        {
+            retour = false;
+        }
     }
     else
     {
-        cout << "Etat OK" << endl;
+        if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
+        {
+            retour = false;
+        }
     }
-
     return retour;
 }
 
+/**
+* Ici on empêche le joueur de sortir de l'écran
+**/
+//*
+void GameModel::isOnScreen(Joueur * j)
+{
+    int widthScreen = GameModel::MODEL_WIDTH;
+    int heightScreen = GameModel::MODEL_HEIGHT;
+
+    if (j->getX() < 0)
+    {
+        j->setX(0);
+    }
+
+    if (j->getX() + j->getH() > widthScreen)
+    {
+        j->setX(widthScreen - j->getH());
+    }
+    if (j->getY() < 0)
+    {
+        j->setY(0);
+    }
+    if (j->getY() + j->getW() > heightScreen)
+    {
+        j->setY(heightScreen - j->getW());
+    }
+}
+//*/
 void GameModel::nextLevel()
 {
     Level * l = new Level();

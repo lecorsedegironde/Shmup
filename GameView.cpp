@@ -20,7 +20,7 @@ GameView::GameView(int w, int h, int bpp)
 
     m_window->SetFramerateLimit(30);
 
-    //CHargement des sprites
+    //Chargement des sprites
     initSprites();
 
 
@@ -46,16 +46,22 @@ void GameView::draw()
 
     //On récupère les positions
     int xJoueur, yJoueur;
-    //int wJoueur, hJoueur;
     m_model->getJoueurPos(xJoueur, yJoueur);
-    //m_model->getJoueurSize(wJoueur, hJoueur);
     m_playerSprite.SetPosition(xJoueur, yJoueur);
-    //m_playerSprite.Resize(wJoueur, hJoueur);
 
     //On récupère les tirs
     for(auto it : m_model->getTir())
     {
-        m_shotSprite.SetSubRect(IntRect(14, 77, 91, 122));
+        TirAllie *t = dynamic_cast<TirAllie*>(it);
+        if (t != nullptr)
+        {
+            m_shotSprite.SetSubRect(IntRect(0, 12, 55, 22));
+        }
+        else
+        {
+            m_shotSprite.SetSubRect(IntRect(0, 0, 55, 10));
+        }
+
         int xTir = it->getX();
         int yTir =  it->getY();
         m_shotSprite.SetPosition(xTir, yTir);
@@ -65,6 +71,7 @@ void GameView::draw()
     //On récupère les ennemis
     for (auto it : m_model->getEnnemi())
     {
+
         m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
         m_ennemySprite.SetPosition(it->getX(), it->getY());
         m_window->Draw(m_ennemySprite);
@@ -73,7 +80,6 @@ void GameView::draw()
     //On dessine
 
     m_window->Draw(m_playerSprite);
-
     m_window->Display();
 }
 

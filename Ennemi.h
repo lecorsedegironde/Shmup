@@ -16,8 +16,6 @@ protected:
     int m_cadenceTir;
     int m_valeur;
 
-    std::vector<TirEnnemi*> m_tirEnnemi;
-
 public:
     Ennemi();
     Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int id, int dom, int mVit, int tir, int val);

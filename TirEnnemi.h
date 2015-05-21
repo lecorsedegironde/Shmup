@@ -10,7 +10,7 @@ private:
 
 public:
     TirEnnemi();
-    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
+    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, int idEnnemi);
     virtual ~TirEnnemi();
 
     virtual bool estAmi(Vaisseau * v);

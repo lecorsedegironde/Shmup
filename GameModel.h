@@ -57,14 +57,16 @@ public:
     std::vector<Tir*> getTir() const;
     std::vector<Ennemi*> getEnnemi() const;
 
-    void setJoueurPos(int x, int y);
-    void setJoueurSpeed(int dx, int dy);
+    void setJoueurPos(const int &x, const int &y);
+    void setJoueurSize(const int &w, const int &h);
+    void setJoueurSpeed(const int &dx, const int &dy);
 
     void tirPlayer();
     bool testFinNiveau();
     bool testFinJeu();
 
     bool isOnScreen(MovableElement * m);
+    void isOnScreen(Joueur * j);
 
     void nextLevel();
 };
