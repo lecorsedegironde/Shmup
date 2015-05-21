@@ -13,8 +13,8 @@ TirEnnemi::TirEnnemi()
     : Tir {}
 {}
 
-TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, int idEnnemi)
-    : Tir {x, y, w, h, dx, dy, degats, delai, idEnnemi}
+TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, unsigned int idEnnemi)
+    : Tir {x, y, w, h, dx, dy, degats, delai}, m_idEnnemi {idEnnemi}
 {}
 
 TirEnnemi::~TirEnnemi()

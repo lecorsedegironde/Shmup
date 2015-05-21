@@ -209,10 +209,19 @@ void GameModel::nextStep()
 //=============================================
 void GameModel::tirPlayer()
 {
-    TirAllie * tirAllie = new TirAllie(m_joueur->getX(), m_joueur->getY(), 1, 1, 10, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
+    int xTir = m_joueur->getX() + m_joueur->getH()/2;
+    int yTir = m_joueur->getY() + m_joueur->getW()/2 - Tir::TIR_WIDTH/2;
+
+    TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_WIDTH, Tir::TIR_HEIGHT, Tir::TIR_SPEED, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
 
     m_tirs.push_back(tirAllie);
-    m_joueur->addTir(tirAllie);
+}
+
+void GameModel::tirEnnemi(Ennemi * e)
+{
+    //TODO Implémenter le tir des ennemis
+    TirEnnemi * tirEnnemi = new TirEnnemi(e->getX(), e->getY(), 1, 1, -10, 0, e->getDommages(), e->getCadenceTir(), e->getId());
+    m_tirs.push_back(tirEnnemi);
 }
 
 void GameModel::setLevel(Level * l)

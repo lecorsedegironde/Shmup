@@ -12,6 +12,11 @@ protected:
     int m_delai;
 
 public:
+    //Constantes
+    static const int TIR_WIDTH;
+    static const int TIR_HEIGHT;
+    static const int TIR_SPEED;
+
     Tir();
     Tir(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
     virtual ~Tir();

@@ -7,10 +7,10 @@
 class TirEnnemi : public Tir
 {
 private:
-
+    unsigned int m_idEnnemi;
 public:
     TirEnnemi();
-    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, int idEnnemi);
+    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, unsigned int idEnnemi);
     virtual ~TirEnnemi();
 
     virtual bool estAmi(Vaisseau * v);

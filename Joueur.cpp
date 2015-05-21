@@ -78,8 +78,3 @@ void Joueur::ameliorerVaisseau()
 {
     //TODO Définir et implémenter l'interface d'amélioration du joueur
 }
-
-void Joueur::addTir(TirAllie *t)
-{
-    m_tirs.push_back(t);
-}

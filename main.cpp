@@ -17,7 +17,10 @@ int main()
 
     view->setModel(model);
 
-
+    while(view->treatMenuEvents())
+    {
+        view->drawMenu();
+    }
 
     while(view->treatEvents())
     {

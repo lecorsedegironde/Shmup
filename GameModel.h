@@ -62,6 +62,8 @@ public:
     void setJoueurSpeed(const int &dx, const int &dy);
 
     void tirPlayer();
+    void tirEnnemi(Ennemi * e);
+
     bool testFinNiveau();
     bool testFinJeu();
 

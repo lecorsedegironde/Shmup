@@ -38,7 +38,9 @@ private:
     sf::Image m_shotImage;
     sf::Sprite m_shotSprite;
 
-    void initSprites();
+    sf::Font m_font1;
+
+    void initRessources();
 
 
     GameModel * m_model;
@@ -54,6 +56,9 @@ public:
     void setModel(GameModel * model);
     void draw();
     bool treatEvents();
+
+    void drawMenu();
+    bool treatMenuEvents();
 };
 
 #endif // GAMEVIEW_H

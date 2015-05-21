@@ -12,8 +12,8 @@ Ennemi::Ennemi()
 {}
 
 Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
-               unsigned int id, int dom, int mVit, int tir, int val)
-    : Vaisseau {x, y, w, h, dx, dy, pdv}, m_idEnnemi {id}, m_dommages {dom},
+               unsigned int id, TypeEnnemi type, int dom, int mVit, int tir, int val)
+    : Vaisseau {x, y, w, h, dx, dy, pdv}, m_idEnnemi {id}, m_type {type}, m_dommages {dom},
 m_modificateurVitesse {mVit}, m_cadenceTir {tir}, m_valeur {val}
 {}
 //=============================================
@@ -75,7 +75,3 @@ void Ennemi::setValeur(const int &v)
 //=============================================
 //  Fonctions                                 |
 //=============================================
-void Ennemi::addTir(TirEnnemi * t)
-{
-    m_tirEnnemi.push_back(t);
-}

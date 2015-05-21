@@ -8,6 +8,13 @@
 #include "TirEnnemi.h"
 
 using namespace std;
+//=============================================
+//  Constantes                                |
+//=============================================
+const int Tir::TIR_WIDTH = 10;
+const int Tir::TIR_HEIGHT = 55;
+const int Tir::TIR_SPEED = 10;
+
 
 //=============================================
 //  Constructeurs                             |
@@ -64,7 +71,6 @@ bool Tir::estAmi(Vaisseau * v)
     Ennemi * e = dynamic_cast<Ennemi*>(v);
 
     TirAllie * tA = dynamic_cast<TirAllie*>(this);
-    TirEnnemi * tE = dynamic_cast<TirEnnemi*>(this);
 
     if (j != nullptr && tA != nullptr)
     {

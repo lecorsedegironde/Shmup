@@ -13,7 +13,6 @@ private:
     unsigned int m_shield;
     int m_degats;
     int m_delai;
-    std::vector<TirAllie*> m_tirs;
 
 public:
     //Les constantes :
@@ -36,7 +35,6 @@ public:
     void setNbVie(const unsigned int &vie);
     void setShield(const unsigned int &s);
 
-    void addTir(TirAllie * t);
     void perdreVie();
     void gagnerVie();
     void ameliorerVaisseau();
