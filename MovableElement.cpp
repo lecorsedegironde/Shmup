@@ -116,6 +116,5 @@ bool MovableElement::testCollision(MovableElement * m)
     {
         collision = false;
     }
-
     return collision;
 }

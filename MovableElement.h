@@ -36,7 +36,6 @@ public:
     void setDy(const int &dy);
     void setEtat(const bool &etat);
 
-    virtual void detruire() {}  //Pour certains types -> Produire une explosion
     virtual bool testCollision(MovableElement * m);
 };
 

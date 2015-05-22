@@ -10,13 +10,13 @@ enum TypeEnnemi {Soldier, Scout, Heavy, Sniper, Boss};
 
 class Ennemi : public Vaisseau
 {
-protected:
+private:
     unsigned int m_idEnnemi;
     TypeEnnemi m_type;
     int m_dommages;
-    int m_modificateurVitesse;
-    int m_cadenceTir;
+    float m_cadenceTir;
     int m_valeur;
+
 
 public:
     static const int W_SOLDIER;
@@ -28,21 +28,28 @@ public:
     static const int W_SNIPER;
     static const int H_SNIPER;
     static const int SPEED_ENNEMI;
+    static const int VALEUR_SOLDIER;
+    static const int VALEUR_TANK;
+    static const int VALEUR_SCOUT;
+    static const int VALEUR_SNIPER;
+    static const int LIFE_SOLDIER;
+    static const int LIFE_TANK;
+    static const int LIFE_SCOUT;
+    static const int LIFE_SNIPER;
+
 
     Ennemi();
-    Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv, unsigned int id, TypeEnnemi type,int dom, int mVit, int tir, int val);
+    Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv, unsigned int id, TypeEnnemi type, int dom, float tir, int val);
     virtual ~Ennemi();
 
     unsigned int getId() const;
     int getDommages() const;
-    int getModificateurVitesse() const;
-    int getCadenceTir() const;
+    float getCadenceTir() const;
     int getValeur() const;
     TypeEnnemi getType();
 
     void setDommages(const int &d);
-    void setModificateurVitesse(const int &mV);
-    void setCadenceTir(const int &c);
+    void setCadenceTir(const float &c);
     void setValeur(const int &v);
 };
 

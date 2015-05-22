@@ -8,8 +8,8 @@ using namespace std;
 //=============================================
 //  Constantes                                |
 //=============================================
-const int Joueur::JOUEUR_WIDTH = 74;
-const int Joueur::JOUEUR_HEIGHT = 168;
+const int Joueur::JOUEUR_WIDTH = 168;
+const int Joueur::JOUEUR_HEIGHT = 74;
 const int Joueur::JOUEUR_X_SPEED = 10;
 const int Joueur::JOUEUR_Y_SPEED = 10;
 const int Joueur::JOUEUR_BASE_PV = 100;

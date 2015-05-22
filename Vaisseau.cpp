@@ -28,6 +28,12 @@ unsigned int Vaisseau::getPointDeVie() const
 {
     return m_pointDeVie;
 }
+
+float Vaisseau::getElapsedTime()
+{
+    return m_clock.GetElapsedTime();
+}
+
 //=============================================
 //  Setters                                   |
 //=============================================
@@ -39,6 +45,7 @@ void Vaisseau::setPointDeVie(const unsigned int &pdv)
 //=============================================
 //  Fonctions                                 |
 //=============================================
+
 void Vaisseau::augmenterPv(const int &pdv)
 {
     m_pointDeVie += pdv;
@@ -50,4 +57,7 @@ void Vaisseau::diminuerPv(const int &pdv)
         m_pointDeVie -= pdv;
 }
 
-
+void Vaisseau::resetClock()
+{
+    m_clock.Reset();
+}

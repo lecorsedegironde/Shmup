@@ -9,7 +9,7 @@ using namespace std;
 //=============================================
 //  Constantes                                |
 //=============================================
-const int TirAllie::TIR_ALLIE_SPEED = 10;
+const int TirAllie::TIR_ALLIE_SPEED = 20;
 
 //=============================================
 //  Constructeurs                             |

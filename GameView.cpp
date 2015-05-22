@@ -65,6 +65,7 @@ void GameView::draw()
         int xTir = it->getX();
         int yTir =  it->getY();
         m_shotSprite.SetPosition(xTir, yTir);
+        m_shotSprite.Resize(it->getW(), it->getH());
         m_window->Draw(m_shotSprite);
     }
 

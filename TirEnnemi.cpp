@@ -9,7 +9,15 @@ using namespace std;
 //=============================================
 //  Constantes                                |
 //=============================================
-const int TirEnnemi::TIR_ENNEMI_SPEED = -10;
+const int TirEnnemi::TIR_ENNEMI_SPEED = -15;
+const int TirEnnemi::DMG_SOLDIER = 20;
+const int TirEnnemi::DMG_TANK = 10;
+const int TirEnnemi::DMG_SCOUT = 10;
+const int TirEnnemi::DMG_SNIPER = 30;
+const float TirEnnemi::CADENCE_SOLDIER = 1;
+const float TirEnnemi::CADENCE_TANK = 1;
+const float TirEnnemi::CADENCE_SCOUT = 0.9;
+const float TirEnnemi::CADENCE_SNIPER = 1.5;
 
 //=============================================
 //  Constructeurs                             |

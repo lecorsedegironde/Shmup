@@ -25,8 +25,8 @@ GameModel::GameModel(int w, int h)
 m_statusJeu {StatusJeu::Menu}, m_difficulty {0}
 {
     m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
-    0, 0, Joueur::JOUEUR_BASE_PV, 20
-    /*Joueur::JOUEUR_BASE_VIE*/, Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
+    0, 0, Joueur::JOUEUR_BASE_PV,Joueur::JOUEUR_BASE_VIE,
+    Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
 }
 
 GameModel::GameModel(int w, int h, int d)
@@ -34,8 +34,8 @@ GameModel::GameModel(int w, int h, int d)
 m_statusJeu {StatusJeu::Menu}, m_difficulty {d}
 {
     m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
-    0, 0, Joueur::JOUEUR_BASE_PV,
-    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
+    0, 0, Joueur::JOUEUR_BASE_PV, Joueur::JOUEUR_BASE_VIE,
+    Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
 }
 
 //=============================================
@@ -97,8 +97,12 @@ void GameModel::nextStep()
             //L'ennemi sort de l'écran ?
             it->setEtat(isOnScreen(it));
 
+            //On se déplace
             it->setX(it->getX() + it->getDx());
             it->setY(it->getY() + it->getDy());
+
+            //On tire
+            tirEnnemi(it);
         }
 
         for (auto it : m_tirs)
@@ -247,7 +251,6 @@ void GameModel::nextStep()
         }
 
         //Pour chaque ennemi, si son état est false, on ajoute une explosion
-        //TODO Changer pour des valeurs plus affinées
         for (auto it : m_ennemi)
         {
             if (!it->getEtat())
@@ -282,7 +285,6 @@ void GameModel::nextStep()
                 Explosion * e = new Explosion(itEnnemi->getX(), itEnnemi->getY(), Explosion::TAILLE_EXPLOSION,
                                               Explosion::TAILLE_EXPLOSION, 0, Explosion::TAILLE_EXPLOSION);
                 m_explosion.push_back(e);
-
             }
 
         }
@@ -349,25 +351,34 @@ void GameModel::nextStep()
 //=============================================
 void GameModel::tirPlayer()
 {
-    float time = m_clock.GetElapsedTime();
+    float time = m_joueur->getElapsedTime();
     if (time > m_joueur->getDelai())
     {
-        int xTir = m_joueur->getX() + m_joueur->getH()/2;
-        int yTir = m_joueur->getY() + m_joueur->getW()/2 - Tir::TIR_WIDTH/2;
+        int xTir = m_joueur->getX() + m_joueur->getW()/2;
+        int yTir = m_joueur->getY() + m_joueur->getH()/2 - Tir::TIR_WIDTH/2;
 
-        TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirAllie::TIR_ALLIE_SPEED, m_joueur->JOUEUR_BASE_DEGATS);
+        TirAllie * t = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirAllie::TIR_ALLIE_SPEED, m_joueur->JOUEUR_BASE_DEGATS);
 
-        m_tirs.push_back(tirAllie);
-        m_clock.Reset();
+        m_tirs.push_back(t);
+        m_joueur->resetClock();
     }
 
 }
 
 void GameModel::tirEnnemi(Ennemi * e)
 {
-    //TODO Implémenter le tir des ennemis
-    TirEnnemi * t = new TirEnnemi(e->getX(), e->getY(), 1, 1, -10, e->getDommages(), e->getId());
-    m_tirs.push_back(t);
+    //Est-ce que l'ennemi a le droit de tirer ?
+    float time = e->getElapsedTime();
+    if (time > e->getCadenceTir())
+    {
+        int xTir = e->getX() + e->getW()/2;
+        int yTir = e->getY() + e->getH()/2 - Tir::TIR_WIDTH/2;
+
+        TirEnnemi * t = new TirEnnemi(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirEnnemi::TIR_ENNEMI_SPEED, e->getDommages(), e->getId());
+
+        m_tirs.push_back(t);
+        e->resetClock();
+    }
 }
 
 void GameModel::setLevel(Level * l)
@@ -498,6 +509,7 @@ bool GameModel::isOnScreen(MovableElement * m)
             retour = false;
         }
     }
+
     return retour;
 }
 

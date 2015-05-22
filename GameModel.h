@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <SFML/System.hpp>
 
 #include "MovableElement.h"
 #include "Joueur.h"
@@ -26,7 +25,6 @@ private:
     unsigned int m_nbLevel;
     StatusJeu m_statusJeu;
     int m_difficulty;
-    sf::Clock m_clock;
 
     //Joueur
     Joueur * m_joueur;
