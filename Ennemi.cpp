@@ -24,9 +24,9 @@ Ennemi::Ennemi()
     : Vaisseau {}, m_idEnnemi {0},m_dommages {0}, m_modificateurVitesse {0}, m_cadenceTir {0}, m_valeur {0}
 {}
 
-Ennemi::Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
+Ennemi::Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv,
                unsigned int id, TypeEnnemi type, int dom, int mVit, int tir, int val)
-    : Vaisseau {x, y, w, h, dx, dy, pdv}, m_idEnnemi {id}, m_type {type}, m_dommages {dom},
+    : Vaisseau {x, y, w, h, dx, 0, pdv}, m_idEnnemi {id}, m_type {type}, m_dommages {dom},
 m_modificateurVitesse {mVit}, m_cadenceTir {tir}, m_valeur {val}
 {}
 //=============================================
@@ -60,6 +60,11 @@ int Ennemi::getCadenceTir() const
 int Ennemi::getValeur() const
 {
     return m_valeur;
+}
+
+TypeEnnemi Ennemi::getType()
+{
+    return m_type;
 }
 
 //=============================================

@@ -7,14 +7,19 @@
 using namespace std;
 
 //=============================================
+//  Constantes                                |
+//=============================================
+const int TirAllie::TIR_ALLIE_SPEED = 10;
+
+//=============================================
 //  Constructeurs                             |
 //=============================================
 TirAllie::TirAllie()
     : Tir {}
 {}
 
-TirAllie::TirAllie(int x, int y, int w, int h, int dx, int dy, int degats, int delai)
-    : Tir {x, y, w, h, dx, dy, degats, delai}
+TirAllie::TirAllie(int x, int y, int w, int h, int dx, int degats)
+    : Tir {x, y, w, h, dx, degats}
 {}
 
 TirAllie::~TirAllie()

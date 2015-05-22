@@ -1,25 +1,36 @@
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
 
-#include "MovableElement.h"
-#include "Vaisseau.h"
+#include <SFML/System.hpp>
 
+#include "MovableElement.h"
+
+enum StadeExplosion{Stade1, Stade2, Stade3, Stade4, Stade5, Stade6, Stade7};
 
 class Explosion : public MovableElement
 {
 private:
+    //Les constantes privés
+    static const float VITESSE_EXPLOSION;
+
     unsigned int m_id;
-    int m_degats;
     int m_distanceLetale;
+    StadeExplosion m_stade;
+    sf::Clock m_clock;
+
 public:
+    //Constante publique
+    static const int TAILLE_EXPLOSION;
+
     Explosion();
-    Explosion(int x, int y, int w, int h, int dx, int dy, int degats, int distancce);
+    Explosion(int x, int y, int w, int h, int dx, int distancce);
     virtual ~Explosion();
-    bool estLetale(Vaisseau * v);
+    bool estLetale(MovableElement * m);
+    void updateStade();
 
-    int getDegats() const;
+    StadeExplosion getStade() const;
+    void setStade(const StadeExplosion & s);
 
-    void setDegats(const int &d);
 };
 
 #endif // EXPLOSION_H

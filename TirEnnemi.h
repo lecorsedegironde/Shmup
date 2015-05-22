@@ -9,8 +9,10 @@ class TirEnnemi : public Tir
 private:
     unsigned int m_idEnnemi;
 public:
+    static const int TIR_ENNEMI_SPEED;
+
     TirEnnemi();
-    TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, unsigned int idEnnemi);
+    TirEnnemi(int x, int y, int w, int h, int dx, int degats, unsigned int idEnnemi);
     virtual ~TirEnnemi();
 
     virtual bool estAmi(Vaisseau * v);

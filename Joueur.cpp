@@ -10,24 +10,24 @@ using namespace std;
 //=============================================
 const int Joueur::JOUEUR_WIDTH = 74;
 const int Joueur::JOUEUR_HEIGHT = 168;
-const int Joueur::JOUEUR_X_SPEED = 5;
-const int Joueur::JOUEUR_Y_SPEED = 5;
+const int Joueur::JOUEUR_X_SPEED = 10;
+const int Joueur::JOUEUR_Y_SPEED = 10;
 const int Joueur::JOUEUR_BASE_PV = 100;
 const int Joueur::JOUEUR_BASE_VIE = 3;
 const int Joueur::JOUEUR_BASE_SHIELD = 0;
 const int Joueur::JOUEUR_BASE_DEGATS = 10;
-const int Joueur::JOUEUR_BASE_DELAI = 1;
+const float Joueur::JOUEUR_BASE_DELAI = 0.2;
 
 
 //=============================================
 //  Constructeurs                             |
 //=============================================
 Joueur::Joueur()
-    : Vaisseau {}, m_nbVie {0}, m_shield {0}
+    : Vaisseau {}, m_nbVie {0}, m_shield {0}, m_delai {JOUEUR_BASE_DELAI}
 {}
 
-Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s)
-    :Vaisseau {x, y, w, h, dx, dy, pdv,}, m_nbVie {vie}, m_shield {s}
+Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s, float delai)
+    :Vaisseau {x, y, w, h, dx, dy, pdv}, m_nbVie {vie}, m_shield {s}, m_delai {delai}
 {}
 
 //=============================================
@@ -48,6 +48,11 @@ unsigned int Joueur::getShield() const
     return m_shield;
 }
 
+float Joueur::getDelai() const
+{
+    return m_delai;
+}
+
 //=============================================
 //  Setters                                   |
 //=============================================
@@ -61,20 +66,25 @@ void Joueur::setShield(const unsigned int &s)
     m_shield = s;
 }
 
+void Joueur::setDelai(const float &d)
+{
+    m_delai = d;
+}
+
 //=============================================
 //  Fonctions                                 |
 //=============================================
 void Joueur::perdreVie()
 {
-    m_nbVie--;
+    if (m_nbVie > 0)
+    {
+        m_nbVie--;
+        m_pointDeVie = JOUEUR_BASE_PV;
+    }
 }
 
 void Joueur::gagnerVie()
 {
     m_nbVie++;
-}
-
-void Joueur::ameliorerVaisseau()
-{
-    //TODO Définir et implémenter l'interface d'amélioration du joueur
+    m_pointDeVie = JOUEUR_BASE_PV;
 }

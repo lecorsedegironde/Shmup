@@ -46,7 +46,8 @@ void Vaisseau::augmenterPv(const int &pdv)
 
 void Vaisseau::diminuerPv(const int &pdv)
 {
-    m_pointDeVie -= pdv;
+    if (m_pointDeVie > 0)
+        m_pointDeVie -= pdv;
 }
 
 

@@ -42,6 +42,8 @@ void GameView::draw()
     m_window->Clear();
     m_window->Draw(m_backgroundSprite);
 
+
+
     //On récupère les positions
     int xJoueur, yJoueur;
     m_model->getJoueurPos(xJoueur, yJoueur);
@@ -69,21 +71,105 @@ void GameView::draw()
     //On récupère les ennemis
     for (auto it : m_model->getEnnemi())
     {
-        m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
-        m_ennemySprite.SetPosition(it->getX(), it->getY());
-        m_ennemySprite.Resize(it->getW(), it->getH());
-        m_window->Draw(m_ennemySprite);
+        bool isBos = false;;
+        switch (it->getType())
+        {
+        case TypeEnnemi::Soldier:
+            m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 78));
+            break;
+        case TypeEnnemi::Heavy:
+            m_ennemySprite.SetSubRect(IntRect(120, 2, 240, 78));
+            break;
+        case TypeEnnemi::Scout:
+            m_ennemySprite.SetSubRect(IntRect(0, 81, 120, 156));
+            break;
+        case TypeEnnemi::Sniper:
+            m_ennemySprite.SetSubRect(IntRect(120, 80, 241, 215));
+            break;
+        case TypeEnnemi::Boss:
+            isBos = true;
+            break;
+        default:
+            m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
+            break;
+        }
+
+        if (!isBos)
+        {
+            m_ennemySprite.SetPosition(it->getX(), it->getY());
+            m_window->Draw(m_ennemySprite);
+        }
+        else
+        {
+            m_bossSprite.SetPosition(it->getX(), it->getY());
+            m_window->Draw(m_bossSprite);
+        }
+
     }
 
-    //On dessine
+    //On récupère les explosions
+    for (auto it : m_model->getExplosion())
+    {
+        switch (it->getStade())
+        {
+        case StadeExplosion::Stade1:
+            m_explosionSprite.SetSubRect(IntRect(0, 0, 136, 136));
+            break;
+        case StadeExplosion::Stade2:
+            m_explosionSprite.SetSubRect(IntRect(140, 0, 276, 136));
+            break;
+        case StadeExplosion::Stade3:
+            m_explosionSprite.SetSubRect(IntRect(280, 0, 416, 136));
+            break;
+        case StadeExplosion::Stade4:
+            m_explosionSprite.SetSubRect(IntRect(420, 0, 556, 136));
+            break;
+        case StadeExplosion::Stade5:
+            m_explosionSprite.SetSubRect(IntRect(0, 140, 136, 276));
+            break;
+        case StadeExplosion::Stade6:
+            m_explosionSprite.SetSubRect(IntRect(140, 140, 276, 276));
+            break;
+        case StadeExplosion::Stade7:
+            m_explosionSprite.SetSubRect(IntRect(280, 140, 416, 276));
+            break;
+        default:
+            m_explosionSprite.SetSubRect(IntRect(0, 0, 136, 136));
+            break;
+        }
 
-    m_window->Draw(m_playerSprite);
+        m_explosionSprite.SetPosition(it->getX(), it->getY());
+        m_window->Draw(m_explosionSprite);
+    }
+
+
+    //Si le joueur à encore des vies
+    if (m_model->isPlayerAlive())
+        m_window->Draw(m_playerSprite);
+
+    //Le score et les vies
+    unsigned int pDV, vies;
+    m_model->getInfo(pDV, vies);
+
+    String pDv("PV : " + to_string(pDV), m_font1, 15);
+    pDv.SetPosition(10, 10);
+
+    String vie("Vies : " + to_string(vies), m_font1, 15);
+    vie.SetPosition(100, 10);
+
+    String score(to_string(m_model->getScore()), m_font1, 20);
+    score.SetPosition(700, 10);
+
+    m_window->Draw(pDv);
+    m_window->Draw(vie);
+    m_window->Draw(score);
+
+    //On affiche le tout à l'écran
     m_window->Display();
 }
 
 bool GameView::treatEvents()
 {
-    //TODO Déplacements plus élégants
     bool retour = false;
 
     if(m_window->IsOpened())
@@ -98,6 +184,7 @@ bool GameView::treatEvents()
             {
                 m_window->Close();
                 retour = false;
+                m_model->setStatus(StatusJeu::Quit);
             }
         }
 
@@ -108,6 +195,7 @@ bool GameView::treatEvents()
         {
             m_window->Close();
             retour = false;
+            m_model->setStatus(StatusJeu::Quit);
         }
         if (input.IsKeyDown(Key::Z))
         {
@@ -130,7 +218,13 @@ bool GameView::treatEvents()
             m_model->tirPlayer();
 
         }
-
+        if (input.IsKeyDown(Key::P))
+        {
+            retour = false;
+            m_model->setStatus(StatusJeu::Pause);
+        }
+        if (m_model->getStatus() != StatusJeu::Play)
+            retour = false;
         //Pour éviter que la vitesse *2 si on straffe
         if (dxJoueur != 0 && dyJoueur !=0)
         {
@@ -220,6 +314,16 @@ void GameView::initRessources()
         m_shotSprite = Sprite(m_shotImage);
     }
 
+    //L'image des transitions
+    if(!m_reviveImage.LoadFromFile("images/revive.png"))
+    {
+        m_reviveSprite = Sprite();
+    }
+    else
+    {
+        m_reviveSprite = Sprite(m_reviveImage);
+    }
+
     //La police du menu
     if(!m_font1.LoadFromFile("polices/kenvector_future.ttf"))
     {
@@ -270,11 +374,23 @@ void GameView::drawMenu()
     m_buttonSprite.SetPosition(buttonPos);
     m_window->Draw(m_buttonSprite);
 
-    //Et ici, le texte du bouton
-    String play("Play", m_font1, 30);
-    Vector2f playPos(buttonPos.x + (buttonSize.x/2 - 45), 402);
-    play.SetPosition(playPos);
-    m_window->Draw(play);
+    //Et ici, le texte du bouton et tout ce qui est quand pause
+    if (m_model->getStatus() == StatusJeu::Menu)
+    {
+        String play("Play", m_font1, 30);
+        Vector2f playPos(buttonPos.x + (buttonSize.x/2 - 45), 402);
+        play.SetPosition(playPos);
+        m_window->Draw(play);
+    }
+    else
+    {
+        String unPause("Unpause", m_font1, 30);
+        Vector2f unPausePos(buttonPos.x + (buttonSize.x/2 - 85), 402);
+        unPause.SetPosition(unPausePos);
+        m_window->Draw(unPause);
+    }
+
+
 
     //Bouton quit
     if (!isQuitSelected)
@@ -321,6 +437,7 @@ bool GameView::treatMenuEvents()
             {
                 m_window->Close();
                 retour = false;
+                m_model->setStatus(StatusJeu::Quit);
             }
         }
 
@@ -330,16 +447,19 @@ bool GameView::treatMenuEvents()
                  && input.GetMouseY() > 400 && input.GetMouseY() < 450))
         {
             retour = false;
+            m_model->setStatus(StatusJeu::Play);
         }
-        else if (input.IsKeyDown(Key::Space) || input.IsKeyDown(Key::Return))
+        else if (input.IsKeyDown(Key::Return))
         {
-            //Si on appuie sur espace le jeu se lance
+            //Si on appuie sur entrée le jeu se lance
             retour = false;
+            m_model->setStatus(StatusJeu::Play);
         }
         else if (input.IsKeyDown(Key::Escape))
         {
             m_window->Close();
             retour = false;
+            m_model->setStatus(StatusJeu::Quit);
         }
         else if (input.IsMouseButtonDown(Mouse::Left) &&
                  (input.GetMouseX() > 510 && input.GetMouseX() < 700
@@ -347,8 +467,44 @@ bool GameView::treatMenuEvents()
         {
             m_window->Close();
             retour = false;
+            m_model->setStatus(StatusJeu::Quit);
         }
     }
 
     return retour;
+}
+
+void GameView::drawTransition()
+{
+    m_window->Clear();
+    m_window->Draw(m_backgroundSprite);
+
+    if (m_model->getStatus() == StatusJeu::LooseGame)
+    {
+        String loose("You Loose", m_font1, 50);
+        loose.SetPosition(225, 250);
+        m_window->Draw(loose);
+        m_model->setStatus(StatusJeu::Quit);
+    }
+    if(m_model->getStatus() == StatusJeu::LooseLife)
+    {
+        String loose("You loose a life !", m_font1, 40);
+        loose.SetPosition(150, 250);
+        m_reviveSprite.SetPosition(310, 320);
+        m_window->Draw(loose);
+        m_window->Draw(m_reviveSprite);
+        m_model->setStatus(StatusJeu::Play);
+    }
+    if(m_model->getStatus() == StatusJeu::PassLevel)
+    {
+        String loose("New Level !", m_font1, 40);
+        loose.SetPosition(220, 250);
+        m_reviveSprite.SetPosition(310, 320);
+        m_window->Draw(loose);
+        m_window->Draw(m_reviveSprite);
+        m_model->setStatus(StatusJeu::Play);
+    }
+
+    m_window->Display();
+    Sleep(3);
 }

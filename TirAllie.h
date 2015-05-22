@@ -6,11 +6,10 @@
 
 class TirAllie : public Tir
 {
-private:
-
 public:
+    static const int TIR_ALLIE_SPEED;
     TirAllie();
-    TirAllie(int x, int y, int w, int h, int dx, int dy, int degats, int delai);
+    TirAllie(int x, int y, int w, int h, int dx, int degats);
     virtual ~TirAllie();
 
     virtual bool estAmi(Vaisseau * v);

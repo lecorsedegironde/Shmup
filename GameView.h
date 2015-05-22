@@ -13,8 +13,6 @@ private:
     int m_h;
     int m_bpp;
 
-    //TODO Add all sprites
-
     sf::RenderWindow * m_window;
 
     sf::Image m_backgroundImage;
@@ -38,6 +36,9 @@ private:
     sf::Image m_shotImage;
     sf::Sprite m_shotSprite;
 
+    sf::Image m_reviveImage;
+    sf::Sprite m_reviveSprite;
+
     sf::Font m_font1;
 
     void initRessources();
@@ -59,6 +60,8 @@ public:
 
     void drawMenu();
     bool treatMenuEvents();
+
+    void drawTransition();
 };
 
 #endif // GAMEVIEW_H

@@ -30,7 +30,7 @@ public:
     static const int SPEED_ENNEMI;
 
     Ennemi();
-    Ennemi(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int id, TypeEnnemi type,int dom, int mVit, int tir, int val);
+    Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv, unsigned int id, TypeEnnemi type,int dom, int mVit, int tir, int val);
     virtual ~Ennemi();
 
     unsigned int getId() const;
@@ -38,6 +38,7 @@ public:
     int getModificateurVitesse() const;
     int getCadenceTir() const;
     int getValeur() const;
+    TypeEnnemi getType();
 
     void setDommages(const int &d);
     void setModificateurVitesse(const int &mV);

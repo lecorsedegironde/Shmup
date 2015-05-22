@@ -12,7 +12,7 @@ private:
     unsigned int m_nbVie;
     unsigned int m_shield;
     int m_degats;
-    int m_delai;
+    float m_delai;
 
 public:
     //Les constantes :
@@ -24,20 +24,22 @@ public:
     static const int JOUEUR_BASE_VIE;
     static const int JOUEUR_BASE_SHIELD;
     static const int JOUEUR_BASE_DEGATS;
-    static const int JOUEUR_BASE_DELAI;
+    static const float JOUEUR_BASE_DELAI;
 
     Joueur();
-    Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s);
+    Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s, float delai);
     virtual ~Joueur();
 
     unsigned int getNbVie() const;
     unsigned int getShield() const;
+    float getDelai() const;
+
     void setNbVie(const unsigned int &vie);
     void setShield(const unsigned int &s);
+    void setDelai(const float &d);
 
     void perdreVie();
     void gagnerVie();
-    void ameliorerVaisseau();
 };
 
 #endif // JOUEUR_H

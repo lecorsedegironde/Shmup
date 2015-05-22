@@ -5,11 +5,15 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <SFML/System.hpp>
 
 #include "MovableElement.h"
 #include "Joueur.h"
 #include "Ennemi.h"
+#include "Explosion.h"
 #include "Level.h"
+
+enum StatusJeu {Play, Pause, Menu, PassLevel, LooseLife, LooseGame, Quit};
 
 class GameModel
 {
@@ -18,14 +22,11 @@ private:
     int m_w;
     int m_h;
     int m_score;
-    int m_malus;
-    int m_scoreTotal;
     float m_combo;
-    int m_nbLevel;
-    bool m_quit;
-    int m_statusJeu;
+    unsigned int m_nbLevel;
+    StatusJeu m_statusJeu;
     int m_difficulty;
-    std::clock_t m_start;
+    sf::Clock m_clock;
 
     //Joueur
     Joueur * m_joueur;
@@ -35,6 +36,9 @@ private:
 
     //Tirs
     std::vector<Tir*> m_tirs;
+
+    //Explosions
+    std::vector<Explosion*> m_explosion;
 
 public:
     //Constantes
@@ -53,13 +57,18 @@ public:
     void getJoueurPos(int &x, int &y) const;
     void getJoueurSize(int &w, int &h) const;
     void getJoueurSpeed(int &dx, int &dy) const;
+    int getScore() const;
+    StatusJeu getStatus() const;
+    void getInfo(unsigned int &pdv, unsigned int &vie) const;
 
     std::vector<Tir*> getTir() const;
     std::vector<Ennemi*> getEnnemi() const;
+    std::vector<Explosion*> getExplosion() const;
 
     void setJoueurPos(const int &x, const int &y);
     void setJoueurSize(const int &w, const int &h);
     void setJoueurSpeed(const int &dx, const int &dy);
+    void setStatus(const StatusJeu &s);
 
     void tirPlayer();
     void tirEnnemi(Ennemi * e);
@@ -70,7 +79,15 @@ public:
     bool isOnScreen(MovableElement * m);
     void isOnScreen(Joueur * j);
 
-    void nextLevel();
+    void playerLooseLife();
+    void resetPosJoueur();
+    bool isPlayerAlive();
+
+    bool areExplosionAlive();
+
+    void newLevel();
 };
+
+
 
 #endif // GAME_MODEL_H

@@ -1,5 +1,6 @@
 #include "GameModel.h"
 #include "Joueur.h"
+#include <algorithm>
 using namespace std;
 
 //=============================================
@@ -14,31 +15,27 @@ const int GameModel::MODEL_HEIGHT = 600;
 //=============================================
 GameModel::GameModel()
     : m_w {MODEL_WIDTH}, m_h {MODEL_HEIGHT}, m_score {0},
-m_malus {0}, m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
-m_quit {false}, m_statusJeu {0}, m_difficulty {0}, m_start {clock()}
+m_combo {0}, m_nbLevel {0}, m_statusJeu {StatusJeu::Menu}, m_difficulty {0}
 {
     m_joueur = new Joueur();
 }
 
 GameModel::GameModel(int w, int h)
-    : m_w {w}, m_h {h}, m_score {0}, m_malus {0},
-m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
-m_quit {false}, m_statusJeu {0}, m_difficulty {0}, m_start {clock()}
+    : m_w {w}, m_h {h}, m_score {0},m_combo {0}, m_nbLevel {1},
+m_statusJeu {StatusJeu::Menu}, m_difficulty {0}
 {
-    //TODO changer le pop du joueur
     m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
-    0, 0, Joueur::JOUEUR_BASE_PV,
-    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD);
+    0, 0, Joueur::JOUEUR_BASE_PV, 20
+    /*Joueur::JOUEUR_BASE_VIE*/, Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
 }
 
 GameModel::GameModel(int w, int h, int d)
-    : m_w {w}, m_h {h}, m_score {0}, m_malus {0},
-m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
-m_quit {false}, m_statusJeu {0}, m_difficulty {d}, m_start {clock()}
+    : m_w {w}, m_h {h}, m_score {0}, m_combo {0}, m_nbLevel {0},
+m_statusJeu {StatusJeu::Menu}, m_difficulty {d}
 {
-    m_joueur = new Joueur(w/2, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
+    m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
     0, 0, Joueur::JOUEUR_BASE_PV,
-    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD);
+    Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
 }
 
 //=============================================
@@ -46,7 +43,6 @@ m_quit {false}, m_statusJeu {0}, m_difficulty {d}, m_start {clock()}
 //=============================================
 GameModel::~GameModel()
 {
-    //TODO Detruire chaque objet initialisé dans le constructeur
     if (m_joueur != nullptr)
     {
         delete m_joueur;
@@ -63,6 +59,12 @@ GameModel::~GameModel()
         if(it != nullptr)
             delete it;
     }
+
+    for (auto it : m_explosion)
+    {
+        if (it != nullptr)
+            delete it;
+    }
 }
 
 //=============================================
@@ -70,57 +72,102 @@ GameModel::~GameModel()
 //=============================================
 void GameModel::nextStep()
 {
+    //Est-ce qu'on a fini le niveau ?
     bool finNiveau = testFinNiveau();
+    //Est-ce que le joueur est encore en état de voler ?
     bool finJeu = testFinJeu();
+    //Est-ce qu'il reste encore des explosions à afficher ?
+    bool isExplosionAlive = areExplosionAlive();
+
 
     //On teste que le jeu ne soit pas fini
     if (!finNiveau && !finJeu)
     {
+        //Le statut est à play
+        //m_statusJeu = StatusJeu::Play;
+
         //On effectue les déplacements
         m_joueur->setX(m_joueur->getX() + m_joueur->getDx());
         m_joueur->setY(m_joueur->getY()+ m_joueur->getDy());
 
         isOnScreen(m_joueur);
 
-        for(auto it : m_ennemi)
+        for (auto it : m_ennemi)
         {
             //L'ennemi sort de l'écran ?
             it->setEtat(isOnScreen(it));
 
             it->setX(it->getX() + it->getDx());
-            it->setY(it->getY()+ it->getDy());
+            it->setY(it->getY() + it->getDy());
         }
 
-        for(auto it : m_tirs)
+        for (auto it : m_tirs)
         {
             //Le tir sort de l'écran ?
             it->setEtat(isOnScreen(it));
 
             it->setX(it->getX() + it->getDx());
-            it->setY(it->getY()+ it->getDy());
+            it->setY(it->getY() + it->getDy());
         }
 
-        //On vérifie les collisions
-        for (auto it : m_ennemi)    //Ennnemis <-> Joueur
+        for (auto it : m_explosion)
+        {
+            //L'explosion sort elle de l'écran ?
+            it->setEtat(isOnScreen(it));
+
+            //On met à jour le stade de l'explosion
+            it->updateStade();
+
+            it->setX(it->getX() + it->getDx());
+            it->setY(it->getY() + it->getDy());
+        }
+
+        /**
+        *
+        * Les collisions
+        *
+        **/
+
+        //
+        // Collisions entre ennemis et le joueur
+        //
+        for (auto it : m_ennemi)
         {
             if(m_joueur->testCollision(it) && it->getEtat())
             {
                 m_joueur->diminuerPv(it->getDommages());
+                if (m_joueur->getPointDeVie() <= 0)
+                {
+                    playerLooseLife();
+                }
                 it->setEtat(false);
+                m_score += it->getValeur();
             }
         }
 
-        for (auto it : m_tirs)  //Tirs <-> Joueur
+        //
+        // Collisions entre tirs et le joueur
+        //
+        for (auto it : m_tirs)
         {
             if(m_joueur->testCollision(it) && it->getEtat())
             {
                 if (!it->estAmi(m_joueur))
+                {
                     m_joueur->diminuerPv(it->getDegats());
-                it->setEtat(false);
+                    if (m_joueur->getPointDeVie() <= 0)
+                    {
+                        playerLooseLife();
+                    }
+                    it->setEtat(false);
+                }
             }
         }
 
-        for (auto itTir : m_tirs)  //Tirs <-> Ennemis
+        //
+        // Collisions entre les tirs et les ennemis
+        //
+        for (auto itTir : m_tirs)
         {
             if (itTir->getEtat())
             {
@@ -138,7 +185,11 @@ void GameModel::nextStep()
             }
         }
 
-        for (auto itEnnemi1 : m_ennemi) //Ennemi <-> Ennemi
+
+        //
+        // Collisions entre ennemis
+        //
+        for (auto itEnnemi1 : m_ennemi)
         {
             if (itEnnemi1->getEtat())
             {
@@ -153,50 +204,143 @@ void GameModel::nextStep()
             }
         }
 
-        //Pour chaque ennemi on check si ses pvs sont au dessus de 0
-        for (auto it : m_ennemi)
+        //
+        // Collisions entre explosions et ennemis, explosions et tirs et explosion et joueur
+        //
+
+        for (auto itExplosion : m_explosion)
         {
-            if (it->getPointDeVie() <=0)
+            if (itExplosion->getEtat())
             {
-                it->setEtat(false);
+                for (auto itEnnemi : m_ennemi)
+                {
+                    if (itExplosion->estLetale(itEnnemi))
+                    {
+                        itEnnemi->setEtat(false);
+                    }
+                }
+
+                for (auto itTirs : m_tirs)
+                {
+                    if (itExplosion->estLetale(itTirs))
+                    {
+                        itTirs->setEtat(false);
+                    }
+                }
+
+                if (itExplosion->estLetale(m_joueur))
+                {
+                    playerLooseLife();
+                }
+
             }
         }
 
+        //Pour chaque ennemi on check si ses PVs sont au dessus de 0
+        for (auto it : m_ennemi)
+        {
+            if (it->getPointDeVie() <=0 && it->getEtat())
+            {
+                it->setEtat(false);
+                m_score += it->getValeur();
+            }
+        }
+
+        //Pour chaque ennemi, si son état est false, on ajoute une explosion
+        //TODO Changer pour des valeurs plus affinées
+        for (auto it : m_ennemi)
+        {
+            if (!it->getEtat())
+            {
+                Explosion * e = new Explosion(it->getX(), it->getY(), Explosion::TAILLE_EXPLOSION,
+                                              Explosion::TAILLE_EXPLOSION, it->getDx(), Explosion::TAILLE_EXPLOSION);
+                m_explosion.push_back(e);
+            }
+        }
     }
-    else
+    else if (finNiveau && !finJeu)
     {
-        //TODO Virer ça !
-        cout << "Niveau Fini" << endl << endl;
-        nextLevel();
+        //On a fini le niveau
+        m_statusJeu = StatusJeu::PassLevel;
+
+        m_nbLevel++;
+        newLevel();
         finNiveau = false;
+    }
+    else if (finJeu && !isExplosionAlive)
+    {
+        //On a perdu la partie
+        m_statusJeu = StatusJeu::LooseGame;
+    }
+    else if (isExplosionAlive && finJeu)
+    {
+        for (auto itEnnemi : m_ennemi)
+        {
+            if (itEnnemi->getEtat())
+            {
+                itEnnemi->setEtat(false);
+                Explosion * e = new Explosion(itEnnemi->getX(), itEnnemi->getY(), Explosion::TAILLE_EXPLOSION,
+                                              Explosion::TAILLE_EXPLOSION, 0, Explosion::TAILLE_EXPLOSION);
+                m_explosion.push_back(e);
+
+            }
+
+        }
+        for (auto itTirs : m_tirs)
+        {
+            itTirs->setEtat(false);
+        }
+
+        for (auto itExplosion : m_explosion)
+        {
+            //L'explosion sort elle de l'écran ?
+            itExplosion->setEtat(isOnScreen(itExplosion));
+
+            //On met à jour le stade de l'explosion
+            itExplosion->updateStade();
+
+            itExplosion->setX(itExplosion->getX() + itExplosion->getDx());
+            itExplosion->setY(itExplosion->getY() + itExplosion->getDy());
+        }
     }
 
     /**
     * Ici on retire les éléments qu'il n'y a plus besoin d'afficher
     **/
-    int position = 0;
-
-    for (auto it : m_tirs)
+    auto itTirs = m_tirs.begin();
+    for (; itTirs != m_tirs.end();)
     {
-        bool test = it->getEtat();
-        if(!test)
+        if ( !(*itTirs)->getEtat())
         {
-            //m_tirs.erase(m_tirs.begin()+position);
-            //delete it;
+            delete *itTirs;
+            itTirs = m_tirs.erase(itTirs);
         }
-        position++;
+        else
+            ++itTirs;
     }
 
-    position = 0;
-    for (auto it : m_ennemi)
+    auto itEnnemi = m_ennemi.begin();
+    for (; itEnnemi != m_ennemi.end();)
     {
-        bool test = it->getEtat();
-        if(!test)
+        if ( !(*itEnnemi)->getEtat())
         {
-            m_ennemi.erase(m_ennemi.begin()+position);
-            delete it;
+            delete *itEnnemi;
+            itEnnemi = m_ennemi.erase(itEnnemi);
         }
-        position++;
+        else
+            ++itEnnemi;
+    }
+
+    auto itExplosion = m_explosion.begin();
+    for (; itExplosion != m_explosion.end();)
+    {
+        if ( !(*itExplosion)->getEtat())
+        {
+            delete *itExplosion;
+            itExplosion = m_explosion.erase(itExplosion);
+        }
+        else
+            ++itExplosion;
     }
 }
 
@@ -205,19 +349,25 @@ void GameModel::nextStep()
 //=============================================
 void GameModel::tirPlayer()
 {
-    int xTir = m_joueur->getX() + m_joueur->getH()/2;
-    int yTir = m_joueur->getY() + m_joueur->getW()/2 - Tir::TIR_WIDTH/2;
+    float time = m_clock.GetElapsedTime();
+    if (time > m_joueur->getDelai())
+    {
+        int xTir = m_joueur->getX() + m_joueur->getH()/2;
+        int yTir = m_joueur->getY() + m_joueur->getW()/2 - Tir::TIR_WIDTH/2;
 
-    TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, Tir::TIR_SPEED, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
+        TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirAllie::TIR_ALLIE_SPEED, m_joueur->JOUEUR_BASE_DEGATS);
 
-    m_tirs.push_back(tirAllie);
+        m_tirs.push_back(tirAllie);
+        m_clock.Reset();
+    }
+
 }
 
 void GameModel::tirEnnemi(Ennemi * e)
 {
     //TODO Implémenter le tir des ennemis
-    TirEnnemi * tirEnnemi = new TirEnnemi(e->getX(), e->getY(), 1, 1, -10, 0, e->getDommages(), e->getCadenceTir(), e->getId());
-    m_tirs.push_back(tirEnnemi);
+    TirEnnemi * t = new TirEnnemi(e->getX(), e->getY(), 1, 1, -10, e->getDommages(), e->getId());
+    m_tirs.push_back(t);
 }
 
 void GameModel::setLevel(Level * l)
@@ -243,6 +393,22 @@ void GameModel::getJoueurSpeed(int &dx, int &dy) const
     dy = m_joueur->getDy();
 }
 
+int GameModel::getScore() const
+{
+    return m_score;
+}
+
+StatusJeu GameModel::getStatus() const
+{
+    return m_statusJeu;
+}
+
+void GameModel::getInfo(unsigned int &pdv, unsigned int &vie) const
+{
+    pdv = m_joueur->getPointDeVie();
+    vie = m_joueur->getNbVie();
+}
+
 vector<Tir*> GameModel::getTir() const
 {
     return m_tirs;
@@ -251,6 +417,11 @@ vector<Tir*> GameModel::getTir() const
 vector<Ennemi*> GameModel::getEnnemi() const
 {
     return m_ennemi;
+}
+
+vector<Explosion*> GameModel::getExplosion() const
+{
+    return m_explosion;
 }
 
 void GameModel::setJoueurPos(const int &x, const int &y)
@@ -271,11 +442,16 @@ void GameModel::setJoueurSpeed(const int &dx,const int &dy)
     m_joueur->setDy(dy);
 }
 
+void GameModel::setStatus(const StatusJeu &s)
+{
+    m_statusJeu = s;
+}
+
 bool GameModel::testFinNiveau()
 {
     bool finNiveau = false;
 
-    if (m_ennemi.empty())
+    if (m_ennemi.empty() && m_explosion.empty())
     {
         finNiveau = true;
     }
@@ -310,14 +486,14 @@ bool GameModel::isOnScreen(MovableElement * m)
     // Si c'est un ennemi
     if (e != nullptr)
     {
-        if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0)
+        if (m->getX() + m->getH() < 0 || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
         {
             retour = false;
         }
     }
     else
     {
-        if (m->getX() < 0 || m->getX() + m->getH() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
+        if (m->getX() + m->getH() < 0 || m->getX() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
         {
             retour = false;
         }
@@ -328,7 +504,6 @@ bool GameModel::isOnScreen(MovableElement * m)
 /**
 * Ici on empêche le joueur de sortir de l'écran
 **/
-//*
 void GameModel::isOnScreen(Joueur * j)
 {
     int widthScreen = GameModel::MODEL_WIDTH;
@@ -352,10 +527,71 @@ void GameModel::isOnScreen(Joueur * j)
         j->setY(heightScreen - j->getW());
     }
 }
-//*/
-void GameModel::nextLevel()
+
+void GameModel::playerLooseLife()
 {
-    Level * l = new Level();
+    //On met le statut à LooseLife
+    m_statusJeu = StatusJeu::LooseLife;
+
+    m_joueur->perdreVie();
+
+    for (auto itEnnemi : m_ennemi)
+    {
+        if (itEnnemi->getEtat())
+        {
+            itEnnemi->setEtat(false);
+        }
+
+    }
+    for (auto itTirs : m_tirs)
+    {
+        itTirs->setEtat(false);
+    }
+
+    for (auto itExplosion : m_explosion)
+    {
+        itExplosion->setEtat(false);
+    }
+
+    resetPosJoueur();
+    newLevel();
+
+}
+
+void GameModel::resetPosJoueur()
+{
+    setJoueurPos(0, m_h/2);
+}
+
+bool GameModel::isPlayerAlive()
+{
+    bool estVivant = true;
+
+    if (m_joueur->getNbVie() == 0)
+    {
+        estVivant = false;
+    }
+
+    return estVivant;
+}
+
+bool GameModel::areExplosionAlive()
+{
+    bool isExplosionAlive = false;
+
+    for (auto it : m_explosion)
+    {
+        if (!isExplosionAlive && it->getEtat())
+            isExplosionAlive = true;
+    }
+
+    return isExplosionAlive;
+}
+
+void GameModel::newLevel()
+{
+    Level * l = new Level(m_nbLevel);
     setLevel(l);
+    resetPosJoueur();
     delete l;
 }

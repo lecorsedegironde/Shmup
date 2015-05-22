@@ -7,14 +7,19 @@
 using namespace std;
 
 //=============================================
+//  Constantes                                |
+//=============================================
+const int TirEnnemi::TIR_ENNEMI_SPEED = -10;
+
+//=============================================
 //  Constructeurs                             |
 //=============================================
 TirEnnemi::TirEnnemi()
     : Tir {}
 {}
 
-TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int dy, int degats, int delai, unsigned int idEnnemi)
-    : Tir {x, y, w, h, dx, dy, degats, delai}, m_idEnnemi {idEnnemi}
+TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int degats, unsigned int idEnnemi)
+    : Tir {x, y, w, h, dx, degats}, m_idEnnemi {idEnnemi}
 {}
 
 TirEnnemi::~TirEnnemi()

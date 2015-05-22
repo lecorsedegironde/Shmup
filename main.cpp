@@ -17,16 +17,52 @@ int main()
 
     view->setModel(model);
 
-    while(view->treatMenuEvents())
+//Tant que l'app tourne
+    do
     {
-        view->drawMenu();
+        //On teste le statut du jeu
+        switch (model->getStatus())
+        {
+        case StatusJeu::Play:
+            while(view->treatEvents())
+            {
+                model->nextStep();
+                view->draw();
+            }
+            break;
+        case StatusJeu::Menu:
+            while(view->treatMenuEvents())
+            {
+                view->drawMenu();
+            }
+            break;
+        case StatusJeu::Pause:
+            while(view->treatMenuEvents())
+            {
+                view->drawMenu();
+            }
+        case StatusJeu::LooseLife:
+            view->drawTransition();
+            break;
+        case StatusJeu::LooseGame:
+            view->drawTransition();
+            break;
+        case StatusJeu::PassLevel:
+            view->drawTransition();
+            break;
+        case StatusJeu::Quit:
+            break;
+        default:
+            while(view->treatEvents())
+            {
+                model->nextStep();
+                view->draw();
+            }
+            break;
+        }
     }
+    while (model->getStatus() != Quit);
 
-    while(view->treatEvents())
-    {
-        model->nextStep();
-        view->draw();
-    }
 
     delete view;
     delete model;
