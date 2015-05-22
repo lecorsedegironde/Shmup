@@ -71,12 +71,13 @@ bool Tir::estAmi(Vaisseau * v)
     Ennemi * e = dynamic_cast<Ennemi*>(v);
 
     TirAllie * tA = dynamic_cast<TirAllie*>(this);
+    TirEnnemi * tE = dynamic_cast<TirEnnemi*>(this);
 
     if (j != nullptr && tA != nullptr)
     {
         ami = true;
     }
-    else if (e != nullptr)
+    else if (e != nullptr && tE != nullptr)
     {
         ami = true;
     }

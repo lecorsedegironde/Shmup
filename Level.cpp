@@ -36,10 +36,10 @@ vector<Ennemi*> Level::genLevel()
     int idEnnemi = 0;
     // TODO Remplacer par la génération aléatoire de level
     vector<Ennemi*> level;
-    Ennemi * e1 = new Ennemi(500, 300, 1, 1, -10, 0, 20, idEnnemi, TypeEnnemi::Soldier, 10, 0, 1, 10);
+    Ennemi * e1 = new Ennemi(500, 300, Ennemi::W_SOLDIER, Ennemi::H_SOLDIER, Ennemi::SPEED_ENNEMI, 0, 20, idEnnemi, TypeEnnemi::Soldier, 10, 0, 1, 10);
     idEnnemi++;
 
-    Ennemi * e2 = new Ennemi(700, 400, 1, 1, -10, 0, 20, idEnnemi, TypeEnnemi::Scout, 10, 0, 1, 10);
+    Ennemi * e2 = new Ennemi(500, 400, Ennemi::W_SCOUT, Ennemi::H_SCOUT, Ennemi::SPEED_ENNEMI, 0, 20, idEnnemi, TypeEnnemi::Scout, 10, 0, 1, 10);
     idEnnemi++;
 
     level.push_back(e1);

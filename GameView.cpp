@@ -69,9 +69,9 @@ void GameView::draw()
     //On récupère les ennemis
     for (auto it : m_model->getEnnemi())
     {
-
         m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 79));
         m_ennemySprite.SetPosition(it->getX(), it->getY());
+        m_ennemySprite.Resize(it->getW(), it->getH());
         m_window->Draw(m_ennemySprite);
     }
 
@@ -129,6 +129,13 @@ bool GameView::treatEvents()
         {
             m_model->tirPlayer();
 
+        }
+
+        //Pour éviter que la vitesse *2 si on straffe
+        if (dxJoueur != 0 && dyJoueur !=0)
+        {
+            dxJoueur -= (dxJoueur / 6);
+            dyJoueur -= (dyJoueur / 6);
         }
 
         m_model->setJoueurSpeed(dxJoueur, dyJoueur);
@@ -220,7 +227,7 @@ void GameView::initRessources()
     }
 }
 
-//Le Menu
+//L'affichage du menu, la forme du bouton dépendant de la position de la souris, on la gère ici.
 void GameView::drawMenu()
 {
     //Pour savoir si les boutons sont survolés pas la souris
@@ -296,6 +303,7 @@ void GameView::drawMenu()
     m_window->Display();
 }
 
+//Le traitement des évènements du menu sauf le survol des boutons
 bool GameView::treatMenuEvents()
 {
     bool retour = false;
@@ -323,9 +331,19 @@ bool GameView::treatMenuEvents()
         {
             retour = false;
         }
-        else if (input.IsKeyDown(Key::Escape) || (input.IsMouseButtonDown(Mouse::Left) &&
+        else if (input.IsKeyDown(Key::Space) || input.IsKeyDown(Key::Return))
+        {
+            //Si on appuie sur espace le jeu se lance
+            retour = false;
+        }
+        else if (input.IsKeyDown(Key::Escape))
+        {
+            m_window->Close();
+            retour = false;
+        }
+        else if (input.IsMouseButtonDown(Mouse::Left) &&
                  (input.GetMouseX() > 510 && input.GetMouseX() < 700
-                  && input.GetMouseY() > 400 && input.GetMouseY() < 450)))
+                  && input.GetMouseY() > 400 && input.GetMouseY() < 450))
         {
             m_window->Close();
             retour = false;

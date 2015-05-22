@@ -103,15 +103,18 @@ void MovableElement::setEtat(const bool &etat)
 //=============================================
 bool MovableElement::testCollision(MovableElement * m)
 {
-    //TODO Gestion des collisions
-    //Pour l'affichage console, comme tous a pour taille (1,1), on se contente de tester les coordonnées
-    bool collision = false;
+    bool collision = true;
     int xM = m->getX();
     int yM = m->getY();
+    int wM = m->getW();
+    int hM = m->getH();
 
-    if (xM == m_x && yM == m_y)
+    if ((xM >= m_x + m_w)          //Droite
+            || (xM + wM <= m_x)    //Gauche
+            || (yM >= m_y + m_h)   //Bas
+            || (yM + hM <= m_y))   //Haut
     {
-        collision = true;
+        collision = false;
     }
 
     return collision;

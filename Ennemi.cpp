@@ -3,6 +3,19 @@
 #include "Ennemi.h"
 
 using namespace std;
+//=============================================
+//  Constantes                                |
+//=============================================
+const int Ennemi::W_SOLDIER = 120;
+const int Ennemi::H_SOLDIER = 78;
+const int Ennemi::W_TANK = 120;
+const int Ennemi::H_TANK = 76;
+const int Ennemi::W_SCOUT = 120;
+const int Ennemi::H_SCOUT = 75;
+const int Ennemi::W_SNIPER = 121;
+const int Ennemi::H_SNIPER = 135;
+const int Ennemi::SPEED_ENNEMI = -10;
+
 
 //=============================================
 //  Constructeurs                             |

@@ -26,7 +26,7 @@ m_scoreTotal {0}, m_combo {0}, m_nbLevel {0},
 m_quit {false}, m_statusJeu {0}, m_difficulty {0}, m_start {clock()}
 {
     //TODO changer le pop du joueur
-    m_joueur = new Joueur(w/2, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
+    m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
     0, 0, Joueur::JOUEUR_BASE_PV,
     Joueur::JOUEUR_BASE_VIE, Joueur::JOUEUR_BASE_SHIELD);
 }
@@ -126,10 +126,13 @@ void GameModel::nextStep()
             {
                 for (auto itEnnemi : m_ennemi)
                 {
-                    if (!itTir->estAmi(itEnnemi)  && itEnnemi->getEtat() && itTir->testCollision(itEnnemi))
+                    if (!itTir->estAmi(itEnnemi)  && itEnnemi->getEtat())
                     {
-                        itEnnemi->diminuerPv(itTir->getDegats());
-                        itTir->setEtat(false);
+                        if (itTir->testCollision(itEnnemi))
+                        {
+                            itEnnemi->diminuerPv(itTir->getDegats());
+                            itTir->setEtat(false);
+                        }
                     }
                 }
             }
@@ -172,24 +175,17 @@ void GameModel::nextStep()
     * Ici on retire les éléments qu'il n'y a plus besoin d'afficher
     **/
     int position = 0;
-    vector<int> toDelete;
 
     for (auto it : m_tirs)
     {
         bool test = it->getEtat();
         if(!test)
         {
-            toDelete.push_back(position);
+            //m_tirs.erase(m_tirs.begin()+position);
+            //delete it;
         }
         position++;
     }
-
-    for (auto i : toDelete)
-    {
-        delete m_tirs[i];
-        m_tirs.erase(m_tirs.begin()+i);
-    }
-    toDelete.clear();
 
     position = 0;
     for (auto it : m_ennemi)
@@ -212,7 +208,7 @@ void GameModel::tirPlayer()
     int xTir = m_joueur->getX() + m_joueur->getH()/2;
     int yTir = m_joueur->getY() + m_joueur->getW()/2 - Tir::TIR_WIDTH/2;
 
-    TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_WIDTH, Tir::TIR_HEIGHT, Tir::TIR_SPEED, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
+    TirAllie * tirAllie = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, Tir::TIR_SPEED, 0, m_joueur->JOUEUR_BASE_DEGATS, m_joueur->JOUEUR_BASE_DELAI);
 
     m_tirs.push_back(tirAllie);
 }
