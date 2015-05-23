@@ -18,7 +18,7 @@ public:
     static const int JOUEUR_HEIGHT;
     static const int JOUEUR_X_SPEED;
     static const int JOUEUR_Y_SPEED;
-    static const int JOUEUR_BASE_PV;
+    static const unsigned int JOUEUR_BASE_PV;
     static const int JOUEUR_BASE_VIE;
     static const int JOUEUR_BASE_SHIELD;
     static const int JOUEUR_BASE_DEGATS;
