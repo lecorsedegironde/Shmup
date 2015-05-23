@@ -34,7 +34,8 @@ Ennemi::Ennemi()
 
 Ennemi::Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv,
                unsigned int id, TypeEnnemi type, int dom, float tir, int val)
-    : Vaisseau {x, y, w, h, dx, 0, pdv}, m_idEnnemi {id}, m_type {type}, m_dommages {dom}, m_cadenceTir {tir}, m_valeur {val}
+    : Vaisseau {x, y, w, h, dx, 0, pdv}, m_idEnnemi {id}, m_type {type}, m_dommages {dom},
+m_cadenceTir {tir}, m_valeur {val}
 {}
 //=============================================
 //  Destructeurs                              |

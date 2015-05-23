@@ -15,7 +15,8 @@ const int Explosion::TAILLE_EXPLOSION = 136;
 //  Constructeurs                             |
 //=============================================
 Explosion::Explosion()
-    : MovableElement {}, m_distanceLetale {0}, m_stade {StadeExplosion::Stade1}
+    : MovableElement {}, m_distanceLetale {0},
+m_stade {StadeExplosion::Stade1}
 {
     m_clock.Reset();
 }
@@ -23,7 +24,7 @@ Explosion::Explosion()
 Explosion::Explosion(int x, int y, int w, int h, int dx,
                      int distance)
     : MovableElement {x, y, w, h, dx, 0}, m_distanceLetale {distance},
-    m_stade {StadeExplosion::Stade1}
+m_stade {StadeExplosion::Stade1}
 {
     m_clock.Reset();
 }

@@ -25,7 +25,9 @@ public:
     static const float JOUEUR_BASE_DELAI;
 
     Joueur();
-    Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s, float delai);
+    Joueur(int x, int y, int w, int h, int dx, int dy,
+           unsigned int pdv, unsigned int vie, unsigned int s,
+           float delai);
     virtual ~Joueur();
 
     unsigned int getNbVie() const;

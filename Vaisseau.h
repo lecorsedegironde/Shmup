@@ -14,7 +14,8 @@ protected:
 
 public:
     Vaisseau();
-    Vaisseau(int x, int y, int w, int h, int dx, int dy, unsigned int pdv);
+    Vaisseau(int x, int y, int w, int h, int dx, int dy,
+             unsigned int pdv);
     virtual ~Vaisseau();
 
     unsigned int getPointDeVie() const;

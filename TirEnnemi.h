@@ -20,7 +20,8 @@ public:
     static const float CADENCE_SNIPER;
 
     TirEnnemi();
-    TirEnnemi(int x, int y, int w, int h, int dx, int degats, unsigned int idEnnemi);
+    TirEnnemi(int x, int y, int w, int h, int dx, int degats,
+              unsigned int idEnnemi);
     virtual ~TirEnnemi();
 
     virtual bool estAmi(Vaisseau * v);

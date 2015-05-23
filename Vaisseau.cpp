@@ -12,7 +12,8 @@ Vaisseau::Vaisseau()
     : MovableElement {}, m_pointDeVie {0}
 {}
 
-Vaisseau::Vaisseau(int x, int y, int w, int h, int dx, int dy, unsigned int pdv)
+Vaisseau::Vaisseau(int x, int y, int w, int h, int dx, int dy,
+                   unsigned int pdv)
     : MovableElement {x, y, w, h, dx, dy}, m_pointDeVie {pdv}
 {}
 

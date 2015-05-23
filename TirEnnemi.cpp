@@ -26,7 +26,8 @@ TirEnnemi::TirEnnemi()
     : Tir {}
 {}
 
-TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx, int degats, unsigned int idEnnemi)
+TirEnnemi::TirEnnemi(int x, int y, int w, int h, int dx,
+                     int degats, unsigned int idEnnemi)
     : Tir {x, y, w, h, dx, degats}, m_idEnnemi {idEnnemi}
 {}
 

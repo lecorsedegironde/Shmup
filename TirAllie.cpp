@@ -18,7 +18,8 @@ TirAllie::TirAllie()
     : Tir {}
 {}
 
-TirAllie::TirAllie(int x, int y, int w, int h, int dx, int degats)
+TirAllie::TirAllie(int x, int y, int w, int h,
+                   int dx, int degats)
     : Tir {x, y, w, h, dx, degats}
 {}
 

@@ -83,8 +83,8 @@ vector<Ennemi*> Level::genLevel()
                     //On génère un y :
                     int yStart = rand() % yMaxSoldier;
                     Ennemi * e1 = new Ennemi(xStart, yStart, Ennemi::W_SOLDIER, Ennemi::H_SOLDIER,
-                                             Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SOLDIER, i, TypeEnnemi::Soldier,
-                                             TirEnnemi::DMG_SOLDIER, TirEnnemi::CADENCE_SOLDIER, Ennemi::VALEUR_SOLDIER);
+                                Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SOLDIER, i, TypeEnnemi::Soldier,
+                                TirEnnemi::DMG_SOLDIER, TirEnnemi::CADENCE_SOLDIER, Ennemi::VALEUR_SOLDIER);
                     level.push_back(e1);
                     nbSoldiers--;
                     succesGen = true;
@@ -99,8 +99,8 @@ vector<Ennemi*> Level::genLevel()
                     //On génère
                     int yStart = rand() % yMaxScout;
                     Ennemi * e2 = new Ennemi(xStart, yStart, Ennemi::W_SCOUT, Ennemi::H_SCOUT,
-                                             Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SCOUT, i, TypeEnnemi::Scout,
-                                             TirEnnemi::DMG_SCOUT, TirEnnemi::CADENCE_SCOUT, Ennemi::VALEUR_SCOUT);
+                                Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SCOUT, i, TypeEnnemi::Scout,
+                                TirEnnemi::DMG_SCOUT, TirEnnemi::CADENCE_SCOUT, Ennemi::VALEUR_SCOUT);
 
                     level.push_back(e2);
                     nbScouts--;
@@ -116,8 +116,8 @@ vector<Ennemi*> Level::genLevel()
                     //On génère
                     int yStart = rand() % yMaxTank;
                     Ennemi * e3 = new Ennemi(xStart, yStart, Ennemi::W_TANK, Ennemi::H_TANK,
-                                             Ennemi::SPEED_ENNEMI, Ennemi::LIFE_TANK, i, TypeEnnemi::Heavy,
-                                             TirEnnemi::DMG_TANK, TirEnnemi::CADENCE_TANK, Ennemi::VALEUR_TANK);
+                                Ennemi::SPEED_ENNEMI, Ennemi::LIFE_TANK, i, TypeEnnemi::Heavy,
+                                TirEnnemi::DMG_TANK, TirEnnemi::CADENCE_TANK, Ennemi::VALEUR_TANK);
                     level.push_back(e3);
                     nbTanks--;
                     succesGen = true;
@@ -132,8 +132,8 @@ vector<Ennemi*> Level::genLevel()
                     //On génère
                     int yStart = rand() % yMaxSniper;
                     Ennemi * e4 = new Ennemi(xStart, yStart, Ennemi::W_SNIPER, Ennemi::H_SNIPER,
-                                             Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SNIPER, i, TypeEnnemi::Sniper,
-                                             TirEnnemi::DMG_SNIPER, TirEnnemi::CADENCE_SNIPER, Ennemi::VALEUR_SNIPER);
+                                Ennemi::SPEED_ENNEMI, Ennemi::LIFE_SNIPER, i, TypeEnnemi::Sniper,
+                                TirEnnemi::DMG_SNIPER, TirEnnemi::CADENCE_SNIPER, Ennemi::VALEUR_SNIPER);
 
                     level.push_back(e4);
                     nbSnipers--;

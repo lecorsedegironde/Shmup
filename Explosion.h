@@ -5,7 +5,9 @@
 
 #include "MovableElement.h"
 
-enum StadeExplosion{Stade1, Stade2, Stade3, Stade4, Stade5, Stade6, Stade7};
+enum StadeExplosion {Stade1, Stade2, Stade3, Stade4,
+                     Stade5, Stade6, Stade7
+                    };
 
 class Explosion : public MovableElement
 {

@@ -12,7 +12,9 @@
 #include "Explosion.h"
 #include "Level.h"
 
-enum StatusJeu {Play, Pause, Menu, PassLevel, LooseLife, LooseGame, Quit};
+enum StatusJeu {Play, Pause, Menu, PassLevel,
+                LooseLife, LooseGame, Quit
+               };
 
 class GameModel
 {

@@ -26,7 +26,8 @@ Joueur::Joueur()
     : Vaisseau {}, m_nbVie {0}, m_shield {0}, m_delai {JOUEUR_BASE_DELAI}
 {}
 
-Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv, unsigned int vie, unsigned int s, float delai)
+Joueur::Joueur(int x, int y, int w, int h, int dx, int dy, unsigned int pdv,
+               unsigned int vie, unsigned int s, float delai)
     :Vaisseau {x, y, w, h, dx, dy, pdv}, m_nbVie {vie}, m_shield {s}, m_delai {delai}
 {}
 

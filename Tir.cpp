@@ -24,7 +24,8 @@ Tir::Tir()
 {}
 
 Tir::Tir(int x, int y, int w, int h, int dx, int degats)
-    : MovableElement {x, y, w, h, dx, 0}, m_degats {degats}
+    : MovableElement {x, y, w, h, dx, 0},
+m_degats {degats}
 {}
 
 //=============================================

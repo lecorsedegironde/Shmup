@@ -193,7 +193,8 @@ void GameModel::nextStep()
             {
                 for (auto itEnnemi2 : m_ennemi)
                 {
-                    if(itEnnemi1->testCollision(itEnnemi2) && itEnnemi1->getId() != itEnnemi2->getId())
+                    if(itEnnemi1->testCollision(itEnnemi2)
+                            && itEnnemi1->getId() != itEnnemi2->getId())
                     {
                         itEnnemi1->setEtat(false);
                         itEnnemi2->setEtat(false);
@@ -203,7 +204,8 @@ void GameModel::nextStep()
         }
 
         //
-        // Collisions entre explosions et ennemis, explosions et tirs et explosion et joueur
+        // Collisions entre explosions et ennemis, explosions et
+        // tirs et explosion et joueur
         //
 
         for (auto itExplosion : m_explosion)
@@ -249,8 +251,9 @@ void GameModel::nextStep()
         {
             if (!it->getEtat())
             {
-                Explosion * e = new Explosion(it->getX(), it->getY(), Explosion::TAILLE_EXPLOSION,
-                                              Explosion::TAILLE_EXPLOSION, it->getDx(), Explosion::TAILLE_EXPLOSION);
+                Explosion * e = new Explosion(it->getX(), it->getY(),
+                                Explosion::TAILLE_EXPLOSION, Explosion::TAILLE_EXPLOSION,
+                                it->getDx(), Explosion::TAILLE_EXPLOSION);
                 m_explosion.push_back(e);
             }
         }
@@ -289,8 +292,9 @@ void GameModel::nextStep()
             if (itEnnemi->getEtat())
             {
                 itEnnemi->setEtat(false);
-                Explosion * e = new Explosion(itEnnemi->getX(), itEnnemi->getY(), Explosion::TAILLE_EXPLOSION,
-                                              Explosion::TAILLE_EXPLOSION, 0, Explosion::TAILLE_EXPLOSION);
+                Explosion * e = new Explosion(itEnnemi->getX(), itEnnemi->getY(),
+                                Explosion::TAILLE_EXPLOSION, Explosion::TAILLE_EXPLOSION,
+                                0, Explosion::TAILLE_EXPLOSION);
                 m_explosion.push_back(e);
             }
 
@@ -364,7 +368,9 @@ void GameModel::tirPlayer()
         int xTir = m_joueur->getX() + m_joueur->getW()/2;
         int yTir = m_joueur->getY() + m_joueur->getH()/2 - Tir::TIR_WIDTH/2;
 
-        TirAllie * t = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirAllie::TIR_ALLIE_SPEED, m_joueur->JOUEUR_BASE_DEGATS);
+        TirAllie * t = new TirAllie(xTir, yTir, Tir::TIR_HEIGHT,
+                        Tir::TIR_WIDTH, TirAllie::TIR_ALLIE_SPEED,
+                        m_joueur->JOUEUR_BASE_DEGATS);
 
         m_tirs.push_back(t);
         m_joueur->resetClock();
@@ -381,7 +387,9 @@ void GameModel::tirEnnemi(Ennemi * e)
         int xTir = e->getX() + e->getW()/2;
         int yTir = e->getY() + e->getH()/2 - Tir::TIR_WIDTH/2;
 
-        TirEnnemi * t = new TirEnnemi(xTir, yTir, Tir::TIR_HEIGHT, Tir::TIR_WIDTH, TirEnnemi::TIR_ENNEMI_SPEED, e->getDommages(), e->getId());
+        TirEnnemi * t = new TirEnnemi(xTir, yTir, Tir::TIR_HEIGHT,
+                        Tir::TIR_WIDTH, TirEnnemi::TIR_ENNEMI_SPEED,
+                        e->getDommages(), e->getId());
 
         m_tirs.push_back(t);
         e->resetClock();
@@ -490,7 +498,8 @@ bool GameModel::testFinJeu()
 }
 
 /**
-* Gestion de deux scénarios différents : ennemis qui peuvent avoir des y très élevés
+* Gestion de deux scénarios différents :
+* ennemis qui peuvent avoir des y très élevés
 * et les autres : scénario classique
 **/
 bool GameModel::isOnScreen(MovableElement * m)
@@ -504,14 +513,16 @@ bool GameModel::isOnScreen(MovableElement * m)
     // Si c'est un ennemi
     if (e != nullptr)
     {
-        if (m->getX() + m->getW() < 0 || m->getY() < 0 || m->getY() + m->getH() > heightScreen)
+        if (m->getX() + m->getW() < 0 || m->getY() < 0
+            || m->getY() + m->getH() > heightScreen)
         {
             retour = false;
         }
     }
     else
     {
-        if (m->getX() + m->getW() < 0 || m->getX() > widthScreen || m->getY() < 0 || m->getY() + m->getH() > heightScreen)
+        if (m->getX() + m->getW() < 0 || m->getX() > widthScreen ||
+            m->getY() < 0 || m->getY() + m->getH() > heightScreen)
         {
             retour = false;
         }

@@ -37,7 +37,8 @@ public:
 
 
     Ennemi();
-    Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv, unsigned int id, TypeEnnemi type, int dom, float tir, int val);
+    Ennemi(int x, int y, int w, int h, int dx, unsigned int pdv,
+           unsigned int id, TypeEnnemi type, int dom, float tir, int val);
     virtual ~Ennemi();
 
     unsigned int getId() const;

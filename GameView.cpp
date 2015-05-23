@@ -16,7 +16,8 @@ GameView::GameView(int w, int h)
 GameView::GameView(int w, int h, int bpp)
     : m_w {w}, m_h {h}, m_bpp {bpp}, m_xBack {0}, m_speedBack {10}
 {
-    m_window = new RenderWindow(VideoMode(w, h, bpp), "Shmup", Style::Close);
+    m_window = new RenderWindow(VideoMode(w, h, bpp), "Shmup",
+                                Style::Close);
 
     m_window->SetFramerateLimit(30);
 
@@ -354,18 +355,21 @@ void GameView::initRessources()
     if(!m_music.OpenFromFile("songs/song.ogg")) {}
 }
 
-//L'affichage du menu, la forme du bouton dépendant de la position de la souris, on la gère ici.
+//L'affichage du menu, la forme du bouton dépendant
+//de la position de la souris, on la gère ici.
 void GameView::drawMenu()
 {
     //Pour savoir si les boutons sont survolés pas la souris
     const Input& input = m_window->GetInput();
     bool isPlaySelected, isQuitSelected;
-    if (input.GetMouseX() > 100 && input.GetMouseX() < 290 && input.GetMouseY() > 400 && input.GetMouseY() < 450)
+    if (input.GetMouseX() > 100 && input.GetMouseX() < 290
+        && input.GetMouseY() > 400 && input.GetMouseY() < 450)
     {
         isPlaySelected = true;
         isQuitSelected = false;
     }
-    else if (input.GetMouseX() > 510 && input.GetMouseX() < 700 && input.GetMouseY() > 400 && input.GetMouseY() < 450)
+    else if (input.GetMouseX() > 510 && input.GetMouseX() < 700
+             && input.GetMouseY() > 400 && input.GetMouseY() < 450)
     {
         isPlaySelected = false;
         isQuitSelected = true;
