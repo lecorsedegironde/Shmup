@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <vector>
+#include<vector>
 
 #include "MovableElement.h"
 #include "Joueur.h"
@@ -24,7 +24,6 @@ private:
     float m_combo;
     unsigned int m_nbLevel;
     StatusJeu m_statusJeu;
-    int m_difficulty;
 
     //Joueur
     Joueur * m_joueur;
@@ -46,7 +45,6 @@ public:
 
     GameModel();
     GameModel(int w, int h);
-    GameModel(int w, int h, int d);
     virtual ~GameModel();
 
     void nextStep();

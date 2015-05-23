@@ -1,8 +1,6 @@
 #ifndef ENNEMI_H
 #define ENNEMI_H
 
-#include <vector>
-
 #include "Vaisseau.h"
 #include "TirEnnemi.h"
 
@@ -51,6 +49,7 @@ public:
     void setDommages(const int &d);
     void setCadenceTir(const float &c);
     void setValeur(const int &v);
+    void setId(const unsigned int &id);
 };
 
 #endif // ENNEMI_H

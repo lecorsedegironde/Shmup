@@ -1,8 +1,6 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include <vector>
-
 #include "Vaisseau.h"
 #include "TirAllie.h"
 

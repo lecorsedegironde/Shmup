@@ -7,14 +7,14 @@
 class Level
 {
 private:
-    unsigned int m_difficulte;
+    float m_difficulte;
 public:
     Level();
     Level(unsigned int difficulte);
     Level(const Level& l);
     virtual ~Level();
 
-    unsigned int getDifficulte() const;
+    float getDifficulte() const;
     void setDifficulte(const unsigned int &d);
 
     std::vector<Ennemi*> genLevel();

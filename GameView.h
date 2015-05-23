@@ -12,6 +12,8 @@ private:
     int m_w;
     int m_h;
     int m_bpp;
+    int m_xBack;
+    int m_speedBack;
 
     sf::RenderWindow * m_window;
 
@@ -40,6 +42,8 @@ private:
     sf::Sprite m_reviveSprite;
 
     sf::Font m_font1;
+
+    sf::Music m_music;
 
     void initRessources();
 

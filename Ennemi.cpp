@@ -3,22 +3,23 @@
 #include "Ennemi.h"
 
 using namespace std;
+
 //=============================================
 //  Constantes                                |
 //=============================================
 const int Ennemi::W_SOLDIER = 120;
 const int Ennemi::H_SOLDIER = 78;
-const int Ennemi::W_TANK = 120;
+const int Ennemi::W_TANK = 119;
 const int Ennemi::H_TANK = 76;
 const int Ennemi::W_SCOUT = 120;
 const int Ennemi::H_SCOUT = 75;
 const int Ennemi::W_SNIPER = 121;
 const int Ennemi::H_SNIPER = 135;
 const int Ennemi::SPEED_ENNEMI = -3;
-const int Ennemi::VALEUR_SOLDIER = 70;
-const int Ennemi::VALEUR_TANK = 80;
-const int Ennemi::VALEUR_SCOUT = 50;
-const int Ennemi::VALEUR_SNIPER = 100;
+const int Ennemi::VALEUR_SOLDIER = 700;
+const int Ennemi::VALEUR_TANK = 800;
+const int Ennemi::VALEUR_SCOUT = 500;
+const int Ennemi::VALEUR_SNIPER = 1000;
 const int Ennemi::LIFE_SOLDIER = 20;
 const int Ennemi::LIFE_TANK = 50;
 const int Ennemi::LIFE_SCOUT = 10;
@@ -84,4 +85,9 @@ void Ennemi::setCadenceTir(const float &c)
 void Ennemi::setValeur(const int &v)
 {
     m_valeur = v;
+}
+
+void Ennemi::setId(const unsigned int &id)
+{
+    m_idEnnemi = id;
 }

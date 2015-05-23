@@ -15,26 +15,17 @@ const int GameModel::MODEL_HEIGHT = 600;
 //=============================================
 GameModel::GameModel()
     : m_w {MODEL_WIDTH}, m_h {MODEL_HEIGHT}, m_score {0},
-m_combo {0}, m_nbLevel {0}, m_statusJeu {StatusJeu::Menu}, m_difficulty {0}
+m_combo {0}, m_nbLevel {1}, m_statusJeu {StatusJeu::Menu}
 {
     m_joueur = new Joueur();
 }
 
 GameModel::GameModel(int w, int h)
     : m_w {w}, m_h {h}, m_score {0},m_combo {0}, m_nbLevel {1},
-m_statusJeu {StatusJeu::Menu}, m_difficulty {0}
+m_statusJeu {StatusJeu::Menu}
 {
     m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
     0, 0, Joueur::JOUEUR_BASE_PV,Joueur::JOUEUR_BASE_VIE,
-    Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
-}
-
-GameModel::GameModel(int w, int h, int d)
-    : m_w {w}, m_h {h}, m_score {0}, m_combo {0}, m_nbLevel {0},
-m_statusJeu {StatusJeu::Menu}, m_difficulty {d}
-{
-    m_joueur = new Joueur(0, h/2, Joueur::JOUEUR_WIDTH, Joueur::JOUEUR_HEIGHT,
-    0, 0, Joueur::JOUEUR_BASE_PV, Joueur::JOUEUR_BASE_VIE,
     Joueur::JOUEUR_BASE_SHIELD, Joueur::JOUEUR_BASE_DELAI);
 }
 
@@ -48,23 +39,29 @@ GameModel::~GameModel()
         delete m_joueur;
     }
 
-    for (auto it : m_ennemi)
+    for(auto itEnnemi=m_ennemi.begin(); itEnnemi!=m_ennemi.end();
+            ++itEnnemi)
     {
-        if(it != nullptr)
-            delete it;
+        if ((*itEnnemi) != nullptr)
+            delete (*itEnnemi);
     }
 
-    for (auto it : m_tirs)
+
+    for(auto itTir=m_tirs.begin(); itTir!=m_tirs.end();
+            ++itTir)
     {
-        if(it != nullptr)
-            delete it;
+        if ((*itTir) != nullptr)
+            delete (*itTir);
     }
 
-    for (auto it : m_explosion)
+
+    for(auto itExplosion=m_explosion.begin(); itExplosion!=m_explosion.end();
+            ++itExplosion)
     {
-        if (it != nullptr)
-            delete it;
+        if ((*itExplosion) != nullptr)
+            delete (*itExplosion);
     }
+
 }
 
 //=============================================
@@ -83,12 +80,9 @@ void GameModel::nextStep()
     //On teste que le jeu ne soit pas fini
     if (!finNiveau && !finJeu)
     {
-        //Le statut est à play
-        //m_statusJeu = StatusJeu::Play;
-
         //On effectue les déplacements
         m_joueur->setX(m_joueur->getX() + m_joueur->getDx());
-        m_joueur->setY(m_joueur->getY()+ m_joueur->getDy());
+        m_joueur->setY(m_joueur->getY() + m_joueur->getDy());
 
         isOnScreen(m_joueur);
 
@@ -267,8 +261,21 @@ void GameModel::nextStep()
         m_statusJeu = StatusJeu::PassLevel;
 
         m_nbLevel++;
+        m_joueur->setPointDeVie(Joueur::JOUEUR_BASE_PV);
         newLevel();
         finNiveau = false;
+
+        for (auto itTirs : m_tirs)
+        {
+            itTirs->setEtat(false);
+        }
+
+        for (auto itExplosion : m_explosion)
+        {
+            itExplosion->setEtat(false);
+        }
+
+
     }
     else if (finJeu && !isExplosionAlive)
     {
@@ -497,14 +504,14 @@ bool GameModel::isOnScreen(MovableElement * m)
     // Si c'est un ennemi
     if (e != nullptr)
     {
-        if (m->getX() + m->getH() < 0 || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
+        if (m->getX() + m->getW() < 0 || m->getY() < 0 || m->getY() + m->getH() > heightScreen)
         {
             retour = false;
         }
     }
     else
     {
-        if (m->getX() + m->getH() < 0 || m->getX() > widthScreen || m->getY() < 0 || m->getY() + m->getW() > heightScreen)
+        if (m->getX() + m->getW() < 0 || m->getX() > widthScreen || m->getY() < 0 || m->getY() + m->getH() > heightScreen)
         {
             retour = false;
         }
@@ -526,17 +533,17 @@ void GameModel::isOnScreen(Joueur * j)
         j->setX(0);
     }
 
-    if (j->getX() + j->getH() > widthScreen)
+    if (j->getX() + j->getW() > widthScreen)
     {
-        j->setX(widthScreen - j->getH());
+        j->setX(widthScreen - j->getW());
     }
     if (j->getY() < 0)
     {
         j->setY(0);
     }
-    if (j->getY() + j->getW() > heightScreen)
+    if (j->getY() + j->getH() > heightScreen)
     {
-        j->setY(heightScreen - j->getW());
+        j->setY(heightScreen - j->getH());
     }
 }
 

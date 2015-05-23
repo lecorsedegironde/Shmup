@@ -14,7 +14,7 @@ GameView::GameView(int w, int h)
 {}
 
 GameView::GameView(int w, int h, int bpp)
-    : m_w {w}, m_h {h}, m_bpp {bpp}
+    : m_w {w}, m_h {h}, m_bpp {bpp}, m_xBack {0}, m_speedBack {10}
 {
     m_window = new RenderWindow(VideoMode(w, h, bpp), "Shmup", Style::Close);
 
@@ -22,6 +22,8 @@ GameView::GameView(int w, int h, int bpp)
 
     //Chargement des sprites
     initRessources();
+    m_music.Play();
+    m_music.SetLoop(true);
 }
 
 GameView::~GameView()
@@ -39,10 +41,27 @@ void GameView::setModel(GameModel * model)
 void GameView::draw()
 {
     //On clear l'écran et on dessine le fond
-    m_window->Clear();
+    m_window->Clear(Color(29, 62, 90));
+    //Gestion déplacement du fond
+    m_backgroundSprite.SetSubRect(IntRect(m_xBack, 0, 800, 600));
+    m_backgroundSprite.SetPosition(0, 0);
+    m_window->Draw(m_backgroundSprite);
+    m_backgroundSprite.SetSubRect(IntRect(0, 0, m_xBack, 600));
+    m_backgroundSprite.SetPosition(800 - m_xBack, 0);
     m_window->Draw(m_backgroundSprite);
 
+    //On reset pour les autres animations
+    m_backgroundSprite.SetSubRect(IntRect(0, 0, 800, 600));
+    m_backgroundSprite.SetPosition(0, 0);
 
+    if(m_xBack >= 800)
+    {
+        m_xBack = 0;
+    }
+    else
+    {
+        m_xBack += m_speedBack;
+    }
 
     //On récupère les positions
     int xJoueur, yJoueur;
@@ -79,7 +98,7 @@ void GameView::draw()
             m_ennemySprite.SetSubRect(IntRect(0, 0, 120, 78));
             break;
         case TypeEnnemi::Heavy:
-            m_ennemySprite.SetSubRect(IntRect(120, 2, 240, 78));
+            m_ennemySprite.SetSubRect(IntRect(121, 2, 240, 78));
             break;
         case TypeEnnemi::Scout:
             m_ennemySprite.SetSubRect(IntRect(0, 81, 120, 156));
@@ -159,7 +178,7 @@ void GameView::draw()
     vie.SetPosition(100, 10);
 
     String score(to_string(m_model->getScore()), m_font1, 20);
-    score.SetPosition(700, 10);
+    score.SetPosition(675, 10);
 
     m_window->Draw(pDv);
     m_window->Draw(vie);
@@ -330,6 +349,9 @@ void GameView::initRessources()
     {
         m_font1 = Font::GetDefaultFont();
     }
+
+    //La musique
+    if(!m_music.OpenFromFile("songs/song.ogg")) {}
 }
 
 //L'affichage du menu, la forme du bouton dépendant de la position de la souris, on la gère ici.
